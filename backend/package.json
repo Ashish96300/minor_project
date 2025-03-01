@@ -2,17 +2,23 @@
   "name": "minorbackend",
   "version": "1.0.0",
   "description": "my minor project",
-  "type":"module",
+  "type": "module",
   "main": "index.js",
   "scripts": {
-     "start": "node src/index.js",
- 
-     "dev": "nodemon src/index.js"
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js"
   },
   "keywords": [
     "node",
     "paw"
   ],
   "author": "ashish sen",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "mongoose": "^8.11.0",
+    "nodemon": "^3.1.9"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.7"
+  }
 }
