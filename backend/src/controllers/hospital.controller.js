@@ -66,15 +66,17 @@ const registerHospital =asyncHandler(async(req ,res)=>{
 //  READ
 
 const getAllHospital=asyncHandler(async(req ,res)=>{
-    const findHospital=await(Hospital.findOne(
-      $or("hospitalName ,email")  
-    ))
+    const findHospital=await Hospital.find()
+      console.log(findHospital)
+    
+
     if(!findHospital){
         throw new ApiError(400 ,'No hospital details found')
     }
+   
     return res
     .status(200)
-    .json(new ApiResponse(200 ,getAllHospital ,'hospital details'))
+    .json(new ApiResponse(200 ,findHospital ,'hospital details'))
 })
 
 export {registerHospital ,getAllHospital}
