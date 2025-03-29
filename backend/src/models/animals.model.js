@@ -1,34 +1,39 @@
 import mongoose from "mongoose";
 
 const animalSchema =new mongoose.Schema({
+   
     image:{
         type:String,
         required:true
     },
     age:{
         type:String,
-      
+        required:true
     },
     species:{
-        type:String
+        type:String,
+        required:true
     },
     breed:{
-        type:String
+        type:String,
+        required:true
     },
     gender:{
-        type:string
+        type:String,
+        required:true
     },
     description:{
-        type:string
+        type:String,
+        required:true
     },
-    uplodedBy:{
+    uploadedBy:{
        type: mongoose.Schema.Types.ObjectId,
        ref:'User'
     },
     adoptionStatus:{
-        type:string,
+        type:String,
         enum:['Available' ,'Adopted ','Fostered'],
-        default:['Available']
+        default:'Available'
     }
     
 } ,{timestamps:true})

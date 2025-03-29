@@ -70,7 +70,7 @@ const getAllHospital=asyncHandler(async(req ,res)=>{
       console.log(findHospital)
     
 
-    if(!findHospital){
+    if(!findHospital.length === 0){
         throw new ApiError(400 ,'No hospital details found')
     }
    
@@ -79,4 +79,10 @@ const getAllHospital=asyncHandler(async(req ,res)=>{
     .json(new ApiResponse(200 ,findHospital ,'hospital details'))
 })
 
+/******************************************************************************************************************************************************* */
+
+
 export {registerHospital ,getAllHospital}
+
+/****************************************************************************************************************************************************************************** */
+
