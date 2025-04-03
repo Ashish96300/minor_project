@@ -28,6 +28,14 @@ const hospitalSchema=new mongoose.Schema({
     avatarH: {
         type: String, // cloudinary url
         required: true,
+    },
+    imagesH:{
+        type:[String]
+        
+    },
+    Admin:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'User'
     }
 },{timestamps:true})
 
