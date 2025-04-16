@@ -33,7 +33,7 @@ const animalRegister = asyncHandler(async (req, res) => {
 
     // Handle image upload
     const imageLocalPath = req.file?.path;  
-    console.log("Uploaded File Path:", req.file?.path);
+    //console.log("Uploaded File Path:", req.file?.path);
 
     if (!imageLocalPath) {
         throw new ApiError(400, "Cover image is required");
@@ -69,4 +69,18 @@ const animalRegister = asyncHandler(async (req, res) => {
     return res.status(201).json(new ApiResponse(201, populatedAnimal, "Animal registered successfully"));
 });
 
-export { animalRegister };
+const getAllAnimal=asyncHandler(async(req ,res)=>{
+    const findAnimal=await Animal.find()
+      
+    
+
+    if(!findAnimal.length === 0){
+        throw new ApiError(400 ,'no animal details found')
+    }
+   
+    return res
+    .status(200)
+    .json(new ApiResponse(200 ,findAnimal ,'animal details'))
+})
+
+export { animalRegister ,getAllAnimal};

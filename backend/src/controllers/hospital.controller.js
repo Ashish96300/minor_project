@@ -26,7 +26,8 @@ const registerHospital = asyncHandler(async (req, res) => {
     // Handle File Uploads
     const avatarHLocalPath = req.files?.avatarH?.[0]?.path;
     const imagesHLocalPath = req.files?.imagesH?.map(file => file.path) || [];
-    console.log('imagespath',imagesHLocalPath )
+
+   // console.log('imagespath',imagesHLocalPath )
     if (!avatarHLocalPath) {
         throw new ApiError(400, "Avatar file required");
     }
@@ -34,8 +35,8 @@ const registerHospital = asyncHandler(async (req, res) => {
     // Upload files to Cloudinary
     const avatarH = await uploadOnCloudinary(avatarHLocalPath);
     const imagesH = imagesHLocalPath.length > 0 ? await Promise.all(imagesHLocalPath.map(uploadOnCloudinary)) : [];
-    console.log("Cloudinary Upload Response:", imagesH);
-    console.log('imageurl',imagesH.url)
+    //console.log("Cloudinary Upload Response:", imagesH);
+    //console.log('imageurl',imagesH.url)
     if (!avatarH || !avatarH.url) {
         throw new ApiError(400, "Failed to upload avatar");
     }
@@ -65,11 +66,14 @@ const registerHospital = asyncHandler(async (req, res) => {
 //  READ
 
 const getAllHospital=asyncHandler(async(req ,res)=>{
-    const findHospital=await Hospital.find()
-      console.log(findHospital)
+    const {hospitalName ,email}=req.body
+    const findHospital=await Hospital.findOne({
+        $or:[{hospitalName} ,{email} ,{address}]
+    })
+      //console.log(findHospital)
     
 
-    if(!findHospital.length === 0){
+    if(!findHospital){
         throw new ApiError(400 ,'No hospital details found')
     }
    
@@ -79,5 +83,29 @@ const getAllHospital=asyncHandler(async(req ,res)=>{
 })
 /******************************************************************************************************************************************************* */
 
+/*const updateHospital =asyncHandler(async(req ,res)=>{
+    const hospitalId=req.params.id;
+    //console.log('Admin:',hospitalId)
+   
+    const loggedInAdmin=req.user._id;
+  //  const hospital = await Hospital.findOne({Admin})
+   
+    if (!hospital) {
+        throw new ApiError(404, "Hospital not found");
+    }
+    if(hospital.Admin.toString() !==loggedInAdmin.toString()){
+        throw new ApiError(444 ,'Only admins allowed to update')
+    }
+    const updatedHospital = await Hospital.findByIdAndUpdate(hospitalId, req.body, { new: true });
 
-export {registerHospital ,getAllHospital}
+    return res.status(200).json(new ApiResponse(200, updatedHospital, "Hospital updated successfully"));
+})*/
+const updateHospital= asyncHandler(async (req, res) => {})
+   
+
+/****************************************************************************************************************** */
+/**DELETE */
+
+
+/*********************************************************************************************************************** */
+export {registerHospital ,getAllHospital ,updateHospital}
