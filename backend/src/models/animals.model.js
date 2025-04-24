@@ -1,5 +1,7 @@
 import mongoose from "mongoose";
 
+
+
 const animalSchema =new mongoose.Schema({
    
     image:{

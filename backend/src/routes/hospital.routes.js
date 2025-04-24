@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getAllHospital, registerHospital } from "../controllers/hospital.controller.js";
+import { getAllHospital, registerHospital, updateHospital } from "../controllers/hospital.controller.js";
 import { upload } from "../midllewears/multer.middlewears.js"; // Import Multer middleware
 import { authenticateUser } from "../midllewears/authentication.middlewear.js";
 
@@ -14,5 +14,7 @@ router.route("/Add").post(
     , authenticateUser ,registerHospital);
 
 router.route("/Read").post(getAllHospital);
+
+router.route("/Update").post(authenticateUser, updateHospital);
 
 export default router;

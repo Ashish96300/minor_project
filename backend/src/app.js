@@ -7,7 +7,7 @@ const app = express()
 app.use(cors({
     origin: process.env.CORS_ORIGIN,
     credentials: true,
-    writeConcern: { w: "majority" },
+   
 }))
 
 app.use(express.json({limit: "16kb"}))                              /*data kisi bhi form m ara ho ,charo alag alag handle karenge */
@@ -20,6 +20,7 @@ app.use(cookieParser())
 import userRouter from './routes/user.routes.js'
 import hospitalRouter from './routes/hospital.routes.js'
 import animalRouter from './routes/animal.routes.js'
+import fosterRouter from './routes/foster.routes.js'
 
 /*import healthcheckRouter from "./routes/healthcheck.routes.js"
 import tweetRouter from "./routes/tweet.routes.js"
@@ -34,6 +35,8 @@ import dashboardRouter from "./routes/dashboard.routes.js"*/
 app.use("/api/v1/users", userRouter)
 app.use("/api/v1/hospital" ,hospitalRouter)
 app.use("/api/v1/animal" ,animalRouter)
+app.use("/api/v1/fosterHome" ,fosterRouter)
+
 /*app.use("/api/v1/healthcheck", healthcheckRouter)
 app.use("/api/v1/tweets", tweetRouter)
 app.use("/api/v1/subscriptions", subscriptionRouter)
