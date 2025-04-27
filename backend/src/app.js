@@ -1,7 +1,7 @@
 import express from "express"
 import cors from "cors"
 import cookieParser from "cookie-parser"
-
+import errorMiddleware from "./midllewears/err.middlewear.js"
 const app = express()
 
 app.use(cors({
@@ -47,5 +47,5 @@ app.use("/api/v1/likes", likeRouter)
 //app.use("/api/v1/dashboard", dashboardRouter)*/
 
 // http://localhost:8000/api/v1/users/register
-
+app.use(errorMiddleware); 
 export { app }

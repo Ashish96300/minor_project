@@ -7,6 +7,7 @@ import { response } from "express";
 import jwt from "jsonwebtoken";
 import { upload } from "../midllewears/multer.middlewears.js";
 
+
 const generateAccessAndRefreshTokens = async (userId) => {
     try {
         const user = await User.findById(userId);
@@ -39,7 +40,7 @@ const registerUser=asyncHandler(async (req ,res)=>{
     })
 
     const {fullName ,email ,username ,password}=req.body
-    console.log("username:" ,username);
+    //console.log("username:" ,username);
 
     /*if (fullname==="") {
         throw new ApiError(400 ,"fullname is required")
@@ -105,15 +106,18 @@ const {username ,email ,password}=req.body;
 console.log(username)
 
         if(!username&&!email){
+        console.log('hiii')
         throw new ApiError(400 ,'username or email required');
+       
     }
 
    
 const user =await User.findOne({                           
-    $or:[{username} , {email}]                          
+    $or:[{username} ,{email}]                          
 })
 if(!user){
-   throw new ApiError(404 ,'please enter details')
+    console.log('no user')
+   throw new ApiError(404 ,'please enter correct details')
 }
 
 const isPasswordValid =await user.isPasswordCorrect(password)
@@ -150,7 +154,9 @@ const logoutUser =asyncHandler(async(req ,res)=>{
     //clearing cookies first
 
     await User.findByIdAndUpdate(                   //findByIdAndUpdate is a Mongoose method used to find a document (record) by its _id and update its fields in a MongoDB database.
+      
         req.user._id,{
+        
             $set:{                                                  //set will ask for fieds to be updated and it will update it
                 refreshToken:undefined
             }
