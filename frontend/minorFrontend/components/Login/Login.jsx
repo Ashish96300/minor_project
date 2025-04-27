@@ -3,29 +3,36 @@ import { useContext, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import UserContext from "../../src/context/Usercontext.js";
 import axios from "axios";
-import { ApiError } from "../../../../backend/src/utils/ApiError.js";
+
 import { toast } from "react-toastify";
 import { Bounce } from "react-toastify";
-
+import { Smile, Handshake, Home } from "lucide-react";
 
 function Login() {
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState(''); 
+  const [error, setError] = useState('');
   const { setUser } = useContext(UserContext);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:8000/api/v1/users/login', {
-        username: name, 
-        password,
-      });
+      const response = await axios.post('http://localhost:8000/api/v1/users/login', 
+        {
+            username: name, 
+            password: password
+        },
+        { 
+            withCredentials: true 
+        }
+      );
 
-      setUser(response.data.user); 
-     
-      toast.success('🦄you are logged in!', {
+      // Directly access the user from response and set in context
+      setUser(response.data.data.user);
+      console.log('dddata' ,response.data.data.user)
+      // Show success toast with the response's user data
+      toast.success('🦄 logged in!', {
         position: "top-center",
         autoClose: 5000,
         hideProgressBar: false,
@@ -35,18 +42,41 @@ function Login() {
         progress: undefined,
         theme: "colored",
         transition: Bounce,
-        });
-      //console.log(response.data)
-      navigate('/HomePage'); 
+      });
 
-     }
-     catch (err) {
+      if (response.data.data.user.username) {
+        toast.success(`🏡 Welcome ${response.data.data.user.username}`, {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          transition: Bounce,
+        });
+      } else {
+        toast.error('Username not found in response data.', {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          transition: Bounce,
+        });
+      }
+      navigate('/HomePage'); // Navigate to homepage after successful login
+    }
+    catch (err) {
       if (err.response && err.response.data) {
         const backendData = err.response.data;
-        console.log('Backend Data:', backendData); 
+        console.log('Backend Data:', backendData);
         if (backendData.message) {
           setError(backendData.message);
-         // alert(backendData.message);
           toast.error(backendData.message, {
             position: "top-center",
             autoClose: 5000,
@@ -57,11 +87,10 @@ function Login() {
             progress: undefined,
             theme: "colored",
             transition: Bounce,
-            });
+          });
         } else if (backendData.errors && backendData.errors.length > 0) {
           const errorMessages = backendData.errors.map((e) => e.message).join(", ");
           setError(errorMessages);
-          //alert(errorMessages);
           toast.error(errorMessages, {
             position: "top-center",
             autoClose: 5000,
@@ -72,11 +101,9 @@ function Login() {
             progress: undefined,
             theme: "colored",
             transition: Bounce,
-            });
-
+          });
         } else {
           setError("Something went wrong. Please try again.");
-          //alert("Something went wrong. Please try again.");
           toast.error('Something went wrong. Please try again', {
             position: "top-center",
             autoClose: 5000,
@@ -87,12 +114,11 @@ function Login() {
             progress: undefined,
             theme: "colored",
             transition: Bounce,
-            });
+          });
         }
       } else {
         setError(err.message);
-        //alert(err.message);
-        toast.error(err.message ,{
+        toast.error(err.message, {
           position: "top-center",
           autoClose: 5000,
           hideProgressBar: false,
@@ -102,32 +128,62 @@ function Login() {
           progress: undefined,
           theme: "colored",
           transition: Bounce,
-          });
+        });
       }
     }
-    
-    
   };
-    //   if (err.response && err.response.data && err.response.data.message) {
-    //     setError(err.response.data.message); // <-- This will show "please enter details" if 404 error comes
-      //} 
-    //   else {
-    //     setError("Something went wrong. Please try again."); // fallback
-    //   }
-    // catch (err) {
-    //     console.error(err);
-  
-    //     if (err.response && err.response.data) {
-    //       setError(err.response.data.message); 
-    //       alert(Error)
-    //     } else {
-    //       setError("Something went wrong. Please try again."); // fallback
-    //     }
-    //   }
-    
-      
-    
-  
+
+//   const handleSubmit = async (e) => {
+//     e.preventDefault();
+//     try {
+//         const response = await axios.post('http://localhost:8000/api/v1/users/login', 
+//         {
+//             username: name, 
+//             password: password
+//         },
+//         { 
+//             withCredentials: true 
+//         });
+
+//         // Log the response for debugging
+//         console.log('Login Response:', response);
+
+//         if (response.data && response.data.data && response.data.data.user) {
+//           console.log('Login Response:', response.data.data.user);
+//           setUser(response.data.data.user);  // Corrected to access user from response.data.data.user
+
+
+//             toast.success('🦄 logged in!', {
+//                 position: "top-center",
+//                 autoClose: 5000,
+//                 hideProgressBar: false,
+//                 closeOnClick: false,
+//                 pauseOnHover: true,
+//                 draggable: true,
+//                 progress: undefined,
+//                 theme: "colored",
+//                 transition: Bounce,
+//             });
+
+//             toast.success(`🏡 Welcome ${response.data.user.username}`, {
+//                 position: "top-center",
+//                 autoClose: 5000,
+//                 hideProgressBar: false,
+//                 closeOnClick: false,
+//                 pauseOnHover: true,
+//                 draggable: true,
+//                 progress: undefined,
+//                 theme: "colored",
+//                 transition: Bounce,
+//             });
+
+//             navigate('/HomePage');
+//         }
+//     } catch (err) {
+//         console.error('Login Error:', err);
+//         // Handle error as usual
+//     }
+// };
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-900">
@@ -164,8 +220,8 @@ function Login() {
             </button>
           </div>
         </form>
-        {error && <p className="text-red-500 text-center mt-4">{error}</p>}
 
+        {error && <p className="text-red-500 text-center mt-4">{error}</p>}
 
         <div className="mt-4 text-center">
           <p className="text-sm text-gray-600">
