@@ -17,8 +17,10 @@ function Logout() {
                 {}, 
                 { withCredentials: true }   // <- Send cookies to backend
             );
-            console.log('error:' , response.data)
+            console.log(response.data)
             setUser(null);
+            localStorage.removeItem('Acesstoken');
+
             navigate('/Home');
         } catch (error) {
             console.error("Error during logout:", error);

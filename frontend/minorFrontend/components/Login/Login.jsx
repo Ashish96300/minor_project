@@ -32,6 +32,8 @@ function Login() {
       setUser(response.data.data.user);
       console.log('dddata' ,response.data.data.user)
       // Show success toast with the response's user data
+      localStorage.setItem('token', response.data.data.accessToken);
+      
       toast.success('🦄 logged in!', {
         position: "top-center",
         autoClose: 5000,
