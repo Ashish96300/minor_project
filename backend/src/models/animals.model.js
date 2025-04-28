@@ -10,7 +10,7 @@ const animalSchema =new mongoose.Schema({
     },
     age:{
         type:String,
-        required:true
+        
     },
     species:{
         type:String,
@@ -18,7 +18,7 @@ const animalSchema =new mongoose.Schema({
     },
     breed:{
         type:String,
-        required:true
+        
     },
     gender:{
         type:String,
@@ -26,7 +26,7 @@ const animalSchema =new mongoose.Schema({
     },
     description:{
         type:String,
-        required:true
+        
     },
     uploadedBy:{
        type: mongoose.Schema.Types.ObjectId,
@@ -36,7 +36,12 @@ const animalSchema =new mongoose.Schema({
         type:String,
         enum:['Available' ,'Adopted ','Fostered'],
         default:'Available'
+    },
+    location:{
+        type:String,
+        required:true
     }
+    
     
 } ,{timestamps:true})
 

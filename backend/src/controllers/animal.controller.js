@@ -7,7 +7,7 @@ import { Animal } from "../models/animals.model.js";
 import { User } from "../models/user.model.js";
 
 const animalRegister = asyncHandler(async (req, res) => {
-    const { animalId, age, species, breed, gender, description, adoptionStatus } = req.body;
+    const { animalId, age, species, breed, gender, description, adoptionStatus ,location } = req.body;
 
    // console.log("req.user =", req.user);
     
@@ -18,7 +18,7 @@ const animalRegister = asyncHandler(async (req, res) => {
 }
 
     // Validate required fields
-    if ([animalId, age, species, breed, gender, description, adoptionStatus].some((field) => field?.trim()==="")) {
+    if ([animalId, age, species, breed, gender, description, adoptionStatus ,location].some((field) => field?.trim()==="")) {
         throw new ApiError(400, "All fields are required");
     }
 
@@ -58,6 +58,7 @@ const animalRegister = asyncHandler(async (req, res) => {
         description,
         uploadedBy,  
         adoptionStatus,
+        location
     });
     const populatedAnimal = await Animal.findById(animal._id).populate("uploadedBy", "username email");
 
@@ -69,18 +70,21 @@ const animalRegister = asyncHandler(async (req, res) => {
     return res.status(201).json(new ApiResponse(201, populatedAnimal, "Animal registered successfully"));
 });
 
-const getAllAnimal=asyncHandler(async(req ,res)=>{
-    const findAnimal=await Animal.find()
-      
-    
+const getAllAnimal = async (req, res) => {
+    try {
+        const animals = await Animal.find().populate("uploadedBy", "username email");
 
-    if(!findAnimal.length === 0){
-        throw new ApiError(400 ,'no animal details found')
+        if (animals.length === 0) {
+            return res.status(400).json({ message: 'No animal details found' });
+        }
+
+        // Now return the populated animals
+        return res.status(200).json({ animals: animals });
+    } catch (error) {
+        console.error('Error fetching animals:', error);
+        return res.status(500).json({ message: 'Internal Server Error' });
     }
-   
-    return res
-    .status(200)
-    .json(new ApiResponse(200 ,findAnimal ,'animal details'))
-})
+};
+
 
 export { animalRegister ,getAllAnimal};
