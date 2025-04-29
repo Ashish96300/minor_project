@@ -2,6 +2,8 @@ import { useState ,useEffect } from "react";
 import axios from "axios";
 import { ToastContainer, toast } from 'react-toastify'; 
 import 'react-toastify/dist/ReactToastify.css'; 
+import { Navigate, useNavigate } from "react-router-dom";
+
 
 export function PutForAdoption() {
   const [age, setAge] = useState("");
@@ -126,28 +128,28 @@ export function PutForAdoption() {
 }
 
 /********************************************************************************************************************* */
-export function AdoptPet() {
 
+
+
+
+export function AdoptPet() {
   const [animals, setAnimals] = useState([]); // Array to store animals
   const [loading, setLoading] = useState(true); // Loading state
   const [selectedAnimal, setSelectedAnimal] = useState(null); // State to store the selected animal
+  const Navigate = useNavigate();
 
   useEffect(() => {
     const fetchAnimals = async () => {
       try {
         const response = await axios.post("http://localhost:8000/api/v1/animal/getAnimal");
 
-
         if (response.data && response.data.animals) {
           setAnimals(response.data.animals);
-          console.log('aniData',response.data.animals)
-          console.log(
-            'age:',response.data.animals[0].age
-            )
+          console.log('aniData', response.data.animals);
         } else {
           console.error("No animals data found in the response");
         }
-        
+
         setLoading(false);
       } catch (error) {
         console.error("Error fetching animal data:", error);
@@ -163,18 +165,21 @@ export function AdoptPet() {
     return <p className="text-white">Loading animals...</p>;
   }
 
- 
-
   // Show animal details when an animal card is clicked
   const handleCardClick = (animal) => {
     setSelectedAnimal(animal);
   };
-  
+
+  // Handle the "Contact Uploader" button click
+  const handleContactUploader = () => {
+    // Navigate to the contact uploader page
+    Navigate(`/contactowner/${selectedAnimal._id}`);
+  };
 
   return (
     <div className="p-6 text-white bg-gray-900 min-h-screen">
       <h1 className="text-3xl font-bold mb-6">Available Animals for Adoption</h1>
-      
+
       {/* Grid layout */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {animals.length > 0 ? (
@@ -221,15 +226,15 @@ export function AdoptPet() {
             className="w-64 h-64 object-cover mb-4 rounded-lg"
           />
           <h3 className="text-2xl font-semibold">{selectedAnimal.name}</h3>
-          <p className="text-xl text-gray-400">{selectedAnimal.species}</p>s
+          <p className="text-xl text-gray-400">{selectedAnimal.species}</p>
           <p className="text-xl">{selectedAnimal.breed}</p>
           <p className="mt-2 text-lg">{selectedAnimal.description}</p>
           <p className="mt-2 text-lg">Age: {selectedAnimal.age}</p>
-          <p className="mt-2 text-lg">gender: {selectedAnimal.gender}</p>
-          <p className="mt-2 text-lg">Location:{selectedAnimal.location}</p>
+          <p className="mt-2 text-lg">Gender: {selectedAnimal.gender}</p>
+          <p className="mt-2 text-lg">Location: {selectedAnimal.location}</p>
           <p className="mt-2 text-lg">Uploaded By: {selectedAnimal.uploadedBy.email}</p>
 
-          <p className="mt-2 text-lg">Adoption Status: 
+          <p className="mt-2 text-lg">Adoption Status:
             <span className={`px-2 py-1 rounded-full text-sm ${selectedAnimal.adoptionStatus === "Available"
               ? "bg-green-500 text-white"
               : selectedAnimal.adoptionStatus === "Adopted"
@@ -239,8 +244,17 @@ export function AdoptPet() {
               {selectedAnimal.adoptionStatus}
             </span>
           </p>
+          <button
+        onClick={handleContactUploader}
+        className="mt-4 px-6 py-2 bg-blue-500 text-white rounded-full hover:bg-blue-700"
+      >
+        Contact Uploader
+      </button>
         </div>
       )}
+
+   
+      
     </div>
   );
 }

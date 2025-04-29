@@ -16,6 +16,8 @@ import { HomePage } from '../components/Dashboard/HomePage/HomePage.jsx'
 import ExplorePage from '../components/Dashboard/HomePage/Features/Animal/Animal.jsx'
 import { AdoptPet, PutForAdoption } from '../components/Dashboard/HomePage/Features/Animal/SubFeatures.jsx'
 import ExplorePage2 from '../components/Dashboard/HomePage/Features/Hospital/Hospital.jsx'
+import ContactForm from '../components/Dashboard/HomePage/Features/Animal/ContactOwner.jsx'
+
 
 const router = createBrowserRouter([
   {
@@ -33,7 +35,8 @@ const router = createBrowserRouter([
       {path:'explore' ,element:<ExplorePage/>},
       {path:'putforadoption',element:<PutForAdoption/>},
       {path:'adoptpet', element:<AdoptPet/>},
-      {path:'hospital' ,element:<ExplorePage2/>}
+      {path:'hospital' ,element:<ExplorePage2/>},
+      {path:'contactowner/:animalId' , element:<ContactForm/>}
     ]
   }
 ])
