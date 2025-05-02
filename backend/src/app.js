@@ -22,6 +22,7 @@ import hospitalRouter from './routes/hospital.routes.js'
 import animalRouter from './routes/animal.routes.js'
 import fosterRouter from './routes/foster.routes.js'
 import nodemailerRouter from './routes/nodemailer.routes.js'
+import nodeRouter from './routes/nodemailer.hospital.routes.js'
 
 /*import healthcheckRouter from "./routes/healthcheck.routes.js"
 import tweetRouter from "./routes/tweet.routes.js"
@@ -32,12 +33,13 @@ import likeRouter from "./routes/like.routes.js"
 import playlistRouter from "./routes/playlist.routes.js"s
 import dashboardRouter from "./routes/dashboard.routes.js"*/
 
-//routes declaration11
+//routes declaration11s
 app.use("/api/v1/users", userRouter)
 app.use("/api/v1/hospital" ,hospitalRouter)
 app.use("/api/v1/animal" ,animalRouter)
 app.use("/api/v1/fosterHome" ,fosterRouter)
 app.use("/api/v1/contactowner" ,nodemailerRouter)
+app.use("/api/v1/contacthospitaluploader",nodeRouter)
 
 /*app.use("/api/v1/healthcheck", healthcheckRouter)
 app.use("/api/v1/tweets", tweetRouter)

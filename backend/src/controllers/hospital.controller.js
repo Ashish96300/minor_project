@@ -65,22 +65,46 @@ const registerHospital = asyncHandler(async (req, res) => {
 
 //  READ
 
-const getAllHospital=asyncHandler(async(req ,res)=>{
-    const {hospitalName ,email}=req.body
-    const findHospital=await Hospital.findOne({
-        $or:[{hospitalName} ,{email} ,{address}]
-    })
-      //console.log(findHospital)
+// const getAllHospital=asyncHandler(async(req ,res)=>{
+//     const {hospitalName ,email}=req.body
+//     const findHospital=await Hospital.find({
+//         $or:[{hospitalName} ,{email} ,{address}]
+//     })
+//       //console.log(findHospital)
     
 
-    if(!findHospital){
-        throw new ApiError(400 ,'No hospital details found')
-    }
+//     if(!findHospital){
+//         throw new ApiError(400 ,'No hospital details found')
+//     }
    
-    return res
-    .status(200)
-    .json(new ApiResponse(200 ,findHospital ,'hospital details'))
-})
+//     return res
+//     .status(200)
+//     .json(new ApiResponse(200 ,findHospital ,'hospital details'))
+// })
+
+const getAllHospital = asyncHandler(async (req, res) => {
+    try {
+      const allHospitals = await Hospital.find()
+        .populate('Admin', 'username email'); // Only get username and email
+  
+
+      if (allHospitals.length === 0) {
+        return res
+          .status(404)
+          .json(new ApiResponse(404, [], 'No hospital details found'));
+      }
+  
+      return res
+        .status(200)
+        .json(new ApiResponse(200, { hospitals: allHospitals }, 'All hospital details'));
+    } catch (error) {
+      return res
+        .status(500)
+        .json(new ApiResponse(500, null, 'Server Error'));
+    }
+  });
+  
+  
 /******************************************************************************************************************************************************* */
 
 /*const updateHospital =asyncHandler(async(req ,res)=>{
@@ -100,7 +124,9 @@ const getAllHospital=asyncHandler(async(req ,res)=>{
 
     return res.status(200).json(new ApiResponse(200, updatedHospital, "Hospital updated successfully"));
 })*/
-const updateHospital= asyncHandler(async (req, res) => {})
+const updateHospital= asyncHandler(async (req, res) => {
+
+})
    
 
 /****************************************************************************************************************** */

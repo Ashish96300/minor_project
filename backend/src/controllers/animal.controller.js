@@ -47,7 +47,7 @@ const animalRegister = asyncHandler(async (req, res) => {
     }
    
    
-    // Create new animal entry
+    // Create neww animal entry
     const animal = await Animal.create({
         animalId,
         age,
@@ -78,7 +78,6 @@ const getAllAnimal = async (req, res) => {
             return res.status(400).json({ message: 'No animal details found' });
         }
 
-        // Now return the populated animals
         return res.status(200).json({ animals: animals });
     } catch (error) {
         console.error('Error fetching animals:', error);
