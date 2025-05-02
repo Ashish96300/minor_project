@@ -31,7 +31,8 @@ export function PutForAdoption() {
 
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.post('http://localhost:8000/api/v1/animal/Register', formData, {
+      const response = await axios.post('http://localhost:8000/api/v1/animal/Register', 
+        formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
           Authorization: `Bearer ${token}`, 
@@ -59,7 +60,7 @@ export function PutForAdoption() {
 
   return (
     <div className="p-6 text-white bg-gray-900 min-h-screen">
-      <ToastContainer /> {/* Important for displaying toasts */}
+      <ToastContainer /> 
       <h1 className="text-3xl font-bold mb-4">Put for Adoption</h1>
       <form className="bg-gray-800 p-6 rounded-xl space-y-4 max-w-xl mx-auto" onSubmit={handleSubmit}>
         <input
@@ -160,19 +161,17 @@ export function AdoptPet() {
     fetchAnimals();
   }, []);
 
-  // Show loading message while fetching animals
   if (loading) {
     return <p className="text-white">Loading animals...</p>;
   }
 
-  // Show animal details when an animal card is clicked
   const handleCardClick = (animal) => {
     setSelectedAnimal(animal);
   };
 
-  // Handle the "Contact Uploader" button click
+
   const handleContactUploader = () => {
-    // Navigate to the contact uploader page
+
     Navigate(`/contactowner/${selectedAnimal._id}`);
   };
 
@@ -187,10 +186,10 @@ export function AdoptPet() {
             <div
               key={animal._id}
               className="bg-gray-800 p-4 rounded-lg shadow-lg hover:shadow-2xl transition duration-300 cursor-pointer"
-              onClick={() => handleCardClick(animal)} // Handle click on card
+              onClick={() => handleCardClick(animal)}
             >
               <img
-                src={animal.image || "https://via.placeholder.com/150"} // Default image if not available
+                src={animal.image || "https://via.placeholder.com/150"} 
                 alt={animal.name}
                 className="w-full h-40 object-cover rounded-t-lg"
               />

@@ -11,13 +11,13 @@ export default function ExplorePage2() {
 
         <div className="space-y-4">
           <Link
-            to="#"
+            to="/registerhospital"
             className="bg-green-500 hover:bg-green-600 transition-colors duration-300 text-white px-6 py-3 rounded-full block w-full font-semibold"
           >
             Register a Hospital
           </Link>
           <Link
-            to="#"
+            to="/gethospitals"
             className="bg-blue-500 hover:bg-blue-600 transition-colors duration-300 text-white px-6 py-3 rounded-full block w-full font-semibold"
           >
             Your Nearby Hospital
