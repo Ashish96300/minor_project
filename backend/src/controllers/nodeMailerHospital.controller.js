@@ -4,8 +4,8 @@ import { asyncHandler } from '../utils/asyncHandler.js'
 import { Hospital } from '../models/hospitals.model.js';
 
 export const contactHospitalUploader = asyncHandler(async (req, res) => {
-  const { hospitalId, message, senderEmail } = req.body;
-
+  const { message, senderEmail } = req.body;
+  const { hospitalId } = req.params; 
   if (!hospitalId || !message || !senderEmail) {
     return res
       .status(400)
