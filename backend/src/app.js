@@ -4,11 +4,16 @@ import cookieParser from "cookie-parser"
 import errorMiddleware from "./midllewears/err.middlewear.js"
 const app = express()
 
+app.options('*', cors()); // Handle preflight requests for all routes
+
 app.use(cors({
-    origin: process.env.CORS_ORIGIN,
+    origin: [process.env.CORS_ORIGIN || "http://localhost:5173"],
+    
     credentials: true,
    
 }))
+console.log("CORS_ORIGIN:", process.env.CORS_ORIGIN); // Log the value to check if it's loaded correctly
+
 
 app.use(express.json({limit: "16kb"}))                              /*data kisi bhi form m ara ho ,charo alag alag handle karenge */
 app.use(express.urlencoded({extended: true, limit: "16kb"}))

@@ -5,10 +5,12 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
 
 const registerHome = asyncHandler(async(req ,res)=>{
-    const {Email ,HomeName ,Address ,Contact ,Descrpition} =req.body;
+    const {Email ,HomeName ,Address ,Contact ,Description} =req.body;
     const Admin =req.user._id
+    console.log("log ", Email ,HomeName ,Address ,Contact ,Description);
+    
 
-    if([Email ,HomeName ,Address ,Contact ,Descrpition].some((field)=>field?.trim==="")){
+    if([Email ,HomeName ,Address ,Contact ,Description].some((field)=>field?.trim==="")){
         throw new ApiError(401 ,'All field required');
     }
 
@@ -38,7 +40,7 @@ const registerHome = asyncHandler(async(req ,res)=>{
         Email ,
         HomeName ,
         Address ,
-        Descrpition ,
+        Description ,
         Contact,
         Avatar: Avatar?.url ,
         Image :Image.map(img=>img.url),
@@ -54,19 +56,44 @@ const registerHome = asyncHandler(async(req ,res)=>{
 
 })
 
-const getAllfosterHome=asyncHandler(async(req ,res)=>{
-    const findfosterHOme=await FosterHome.find()
+// const getAllfosterHome=asyncHandler(async(req ,res)=>{
+//     const findfosterHOme=await FosterHome.find()
     
     
 
-    if(!findfosterHOme.length === 0){
-        throw new ApiError(400 ,'No fosterHome details found')
-    }
+//     if(!findfosterHOme.length === 0){
+//         throw new ApiError(400 ,'No fosterHome details found')
+//     }
    
-    return res
-    .status(200)
-    .json(new ApiResponse(200 ,findfosterHOme ,'foster home details'))
-})
+//     return res
+//     .status(200)
+//     .json(new ApiResponse(200 ,findfosterHOme ,'foster home details'))
+// })
+
+
+const getAllfosterHome = asyncHandler(async (req, res) => {
+    try {
+      const allFosterHomes = await FosterHome.find()
+        .populate('Admin', 'username email'); // Only get username and email
+  
+
+      if (allFosterHomes .length === 0) {
+        return res
+          .status(404)
+          .json(new ApiResponse(404, [], 'No foster home details found'));
+      }
+  
+      return res
+        .status(200)
+        .json(new ApiResponse(200, { fosterhomes: allFosterHomes }, 'All foster homes details'));
+    } catch (error) {
+      return res
+        .status(500)
+        .json(new ApiResponse(500, null, 'Server Error'));
+    }
+  });
+  
+
 const updatefosterHome =asyncHandler(async(req ,res)=>{
     const {fosterHomeId}=req.params;
     const loggedInAdmin=req.user._id;
