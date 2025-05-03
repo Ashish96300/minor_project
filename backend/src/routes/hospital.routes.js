@@ -10,8 +10,8 @@ router.route("/Add").post(
     upload.fields([
         {name: "avatarH" ,maxCount:1},
         {name: "imagesH" ,maxCount:5},
-    ])
-    , authenticateUser ,registerHospital);
+    ]),
+    authenticateUser ,registerHospital);
 
 router.route("/Read").post(getAllHospital);
 

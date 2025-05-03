@@ -3,18 +3,16 @@ import cors from "cors"
 import cookieParser from "cookie-parser"
 import errorMiddleware from "./midllewears/err.middlewear.js"
 const app = express()
-import dotenv from "dotenv";
-dotenv.config();
 
 app.use(cors({
     origin: process.env.CORS_ORIGIN,
     credentials: true,
    
 }))
-app.options("*", cors({
-    origin: process.env.CORS_ORIGIN,
-    credentials: true
-  }));
+// app.options("*", cors({
+//     origin: process.env.CORS_ORIGIN,
+//     credentials: true
+//   }));
 
 
 app.use(express.json({limit: "16kb"}))                              /*data kisi bhi form m ara ho ,charo alag alag handle karenge */
