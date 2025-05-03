@@ -1,11 +1,11 @@
-import { Router } from "express";
-import contactOwner from "../controllers/nodeMailerAnimal.controller.js";
+// import { Router } from "express";
+// import contactOwner from "../controllers/nodeMailerAnimal.controller.js";
 
 
-const router = Router();
+// const router = Router();
 
-// Use the dynamic animalId in the route
-router.route("/:animalId/email").post(contactOwner);
+// // Use the dynamic animalId in the route
+// router.route("/:animalId/email").post(contactOwner);
 
 
-export default router;
+// export default router;

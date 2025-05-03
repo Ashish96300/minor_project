@@ -5,9 +5,6 @@ const donateSchema =new mongoose.Schema({
         type:mongoose.Schema.Types.ObjectId,
         ref:'User'
     },
-    donationType:{
-        
-    }
 } ,{timestamps:true})
 
 export const Donate =mongoose.model('Donate',donateSchema)

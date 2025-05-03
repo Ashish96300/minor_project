@@ -180,12 +180,12 @@ const logoutUser =asyncHandler(async(req ,res)=>{
 //to make a end point from where user can refresh his access token 
 
 const refreshAccessToken=asyncHandler(async(req,res)=>{
-    const incomingRefrehToken =req.cookies.refreshToken || req.body.refreshToken                 //accessing it through cookie
-    if(!incomingRefrehToken){
+    const incomingRefreshToken  =req.cookies.refreshToken || req.body.refreshToken                 //accessing it through cookie
+    if(!incomingRefreshToken || incomingRefreshToken===""){
         throw new ApiError(401 ,'anauthorized request')
     }
    try {
-     const decodedToken = jwt.verify(incomingRefrehToken ,REFRESH_TOKEN_SECRET)        //jwt verify ,verify krke decode kr deta h ,token ko
+     const decodedToken = jwt.verify(incomingRefreshToken ,REFRESH_TOKEN_SECRET)        //jwt verify ,verify krke decode kr deta h ,token ko
  
      const user=await User.findById(decodedToken?._id)   //decoded token ko unwrap krke usme se id nikal lo
  
@@ -193,7 +193,7 @@ const refreshAccessToken=asyncHandler(async(req,res)=>{
          throw new ApiError(401 ,'invalid refresh token')
      }
      //camparing user token and incomingrefresh token decoded jo aya h
-     if(incomingRefrehToken!==user?.refreshToken)            //controller m sab se top pr ham ,refresh token ko user m save krwaya tha
+     if(incomingRefreshToken!==user?.refreshToken)            //controller m sab se top pr ham ,refresh token ko user m save krwaya tha
      {
          throw new ApiError(401 ,"refresh token is expired or used")
      }
@@ -206,15 +206,15 @@ const refreshAccessToken=asyncHandler(async(req,res)=>{
      
      return res
      .status(200)
-     .cookie("access token" ,accessToken,options)
-     .cookie("refresh token" ,refreshToken,options)
+     .cookie("accessToken" ,accessToken,options)
+     .cookie("refreshToken" ,refreshToken,options)
      .json(
          new ApiResponse(
-             200,{accessToken ,refreshToken: newRefreshToken },"access token refreshed"
+             200,{accessToken,refreshToken},"access token refreshed"
          )
      )
    } catch (error) {
-    throw new ApiError(401 ,error?.message||"invaid refresh token")
+    throw new ApiError(401 ,error?.message||"invalid refresh token")
    }
 })
 

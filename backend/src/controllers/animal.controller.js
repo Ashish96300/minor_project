@@ -81,7 +81,7 @@ const getAllAnimal = async (req, res) => {
         return res.status(200).json({ animals: animals });
     } catch (error) {
         console.error('Error fetching animals:', error);
-        return res.status(500).json({ message: 'Internal Server Error' });
+        return res.status(500).json({ message:'Internal Server Error' });
     }
 };
 

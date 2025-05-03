@@ -107,12 +107,12 @@ const getAllHospital = asyncHandler(async (req, res) => {
   
 /******************************************************************************************************************************************************* */
 
-/*const updateHospital =asyncHandler(async(req ,res)=>{
+const updateHospital =asyncHandler(async(req ,res)=>{
     const hospitalId=req.params.id;
-    //console.log('Admin:',hospitalId)
+    console.log('Admin:',hospitalId)
    
     const loggedInAdmin=req.user._id;
-  //  const hospital = await Hospital.findOne({Admin})
+    const hospital = await Hospital.findOne({Admin})
    
     if (!hospital) {
         throw new ApiError(404, "Hospital not found");
@@ -123,11 +123,7 @@ const getAllHospital = asyncHandler(async (req, res) => {
     const updatedHospital = await Hospital.findByIdAndUpdate(hospitalId, req.body, { new: true });
 
     return res.status(200).json(new ApiResponse(200, updatedHospital, "Hospital updated successfully"));
-})*/
-const updateHospital= asyncHandler(async (req, res) => {
-
 })
-   
 
 /****************************************************************************************************************** */
 /**DELETE */

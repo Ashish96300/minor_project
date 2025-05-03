@@ -1,9 +1,10 @@
-import { Router } from "express";
+// import { Router } from "express";
 
-import { contactHospitalUploader } from "../controllers/nodeMailerHospital.controller.js";
+// import { contactHospitalUploader } from "../controllers/nodeMailerHospital.controller.js";
 
-const router = Router();
+// const router = Router();
 
-router.route('/:hospitalId/email').post(contactHospitalUploader)
+// router.route('/:hospitalId/email').post(contactHospitalUploader)
 
-export default router;
+
+// export default router;
