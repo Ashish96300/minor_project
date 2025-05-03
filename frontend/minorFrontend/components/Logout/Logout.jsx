@@ -1,34 +1,34 @@
 import axios from "axios";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import UserContext from "../../src/context/Usercontext";
 
 function Logout() {
+  const navigate = useNavigate();
+  const { setUser, user } = useContext(UserContext);
 
-    const navigate = useNavigate();
-    const { setUser } = useContext(UserContext);
-    const {user}= useContext(UserContext)
-    console.log(user)
+  useEffect(() => {
+    console.log("User before logout:", user); // This will now actually print
     const handleLogout = async () => {
-        
-        try {
-            const response = await axios.post(
-                `${import.meta.env.VITE_API_URL}/users/logout`,
-                {}, 
-                { withCredentials: true }  
-            );
-            console.log(response.data)
-            setUser(null);
-            localStorage.removeItem('Acesstoken');
-
-            navigate('/Home');
-        } catch (error) {
-            console.error("Error during logout:", error);
-        }
+      try {
+        const response = await axios.post(
+          `${import.meta.env.VITE_API_URL}/users/logout`,
+          {},
+          { withCredentials: true }
+        );
+        console.log("Logout response:", response.data);
+        setUser(null);
+        localStorage.removeItem("Acesstoken");
+        navigate("/Home");
+      } catch (error) {
+        console.error("Error during logout:", error);
+      }
     };
 
-    return handleLogout
-    
-};
+    handleLogout();
+  }, []);
+
+  return null; // No UI needed
+}
 
 export default Logout;

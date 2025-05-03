@@ -18,7 +18,7 @@ export function RegisterFosterHome() {
         formdata.append('HomeName' ,FosterName);
         formdata.append('Email' ,email);
         formdata.append('Address' ,address);
-        formdata.append('HomeName' ,contact);
+        formdata.append('Contact' ,contact);
         formdata.append('Descrpition' ,description);
         formdata.append(' Avatar' ,Avatar);
         
@@ -32,7 +32,7 @@ export function RegisterFosterHome() {
         {
     headers:{
         'Content-Type' : 'multipart/form-data',
-        Authentication:`Bearer(${token}`,
+         Authorization: `Bearer ${token}`,
             },
         }
     );

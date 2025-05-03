@@ -19,6 +19,7 @@ function Login() {
     e.preventDefault();
     try {
       const response = await axios.post(`${import.meta.env.VITE_API_URL}/users/login`, 
+        
         {
             username: name, 
             password: password
@@ -31,6 +32,7 @@ function Login() {
 
       setUser(response.data.data.user);
       console.log('dddata' ,response.data.data.user)
+      console.log('data:::',`${import.meta.env.VITE_API_URL}`)
      
       localStorage.setItem('token', response.data.data.accessToken);
       
