@@ -40,7 +40,7 @@ export function RegisterHospital() {
     try {
       const token = localStorage.getItem('token');
       const response = await axios.post(
-        'http://localhost:8000/api/v1/hospital/Add',
+        `${import.meta.env.VITE_API_URL}/hospital/Add`,
         formData,
         {
           headers: {
@@ -155,7 +155,7 @@ export function SearchHospital() {
   useEffect(() => {
     const fetchHospitals = async () => {
       try {
-        const response = await axios.post("http://localhost:8000/api/v1/hospital/Read");
+        const response = await axios.post(`${import.meta.env.VITE_API_URL}/hospital/Read`);
         if (response.data && response.data.data.hospitals) {
           setHospital(response.data.data.hospitals);
           console.log(response.data.data.hospitals);

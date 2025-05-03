@@ -18,7 +18,7 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/v1/users/login`, 
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/users/login`, 
         {
             username: name, 
             password: password
@@ -28,10 +28,10 @@ function Login() {
         }
       );
 
-      // Directly access the user from response and set in context
+
       setUser(response.data.data.user);
       console.log('dddata' ,response.data.data.user)
-      // Show success toast with the response's user data
+     
       localStorage.setItem('token', response.data.data.accessToken);
       
       toast.success('🦄 logged in!', {
@@ -71,7 +71,7 @@ function Login() {
           transition: Bounce,
         });
       }
-      navigate('/HomePage'); // Navigate to homepage after successful login
+      navigate('/HomePage');
     }
     catch (err) {
       if (err.response && err.response.data) {

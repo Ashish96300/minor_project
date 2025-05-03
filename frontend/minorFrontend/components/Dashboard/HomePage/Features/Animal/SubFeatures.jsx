@@ -31,7 +31,7 @@ export function PutForAdoption() {
 
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.post('http://localhost:8000/api/v1/animal/Register', 
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/animal/Register`, 
         formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
@@ -142,7 +142,7 @@ export function AdoptPet() {
   useEffect(() => {
     const fetchAnimals = async () => {
       try {
-        const response = await axios.post("http://localhost:8000/api/v1/animal/getAnimal");
+        const response = await axios.post(`${import.meta.env.VITE_API_URL}/animal/getAnimal`);
 
         if (response.data && response.data.animals) {
           setAnimals(response.data.animals);

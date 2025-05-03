@@ -28,7 +28,7 @@ export function RegisterFosterHome() {
     
         try{
     const token = localStorage.getItem('token')
-    const response = await axios.post('http://localhost:8000/api/v1/fosterHome/Add' ,formdata ,
+    const response = await axios.post(`${import.meta.env.VITE_API_URL}/fosterHome/Add` ,formdata ,
         {
     headers:{
         'Content-Type' : 'multipart/form-data',

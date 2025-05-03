@@ -34,11 +34,11 @@ const ContactForm = () => {
     }
 
     try {
-      await axios.post(`http://localhost:8000/api/v1/contactowner/${animalId}/email`, {
+      await axios.post(`${import.meta.env.VITE_API_URL}/contactowner/${animalId}/email`, {
         senderName: user.username,
         senderEmail: user.email,
         message: message,
-        animalId: animalId,
+       
       });
 
       

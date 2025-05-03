@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 import { Bounce } from 'react-toastify';
 
 const ContactAdmin= () => {
-  const { user } = useContext(UserContext); // Get user from context
+  const { user } = useContext(UserContext); 
   const [message, setMessage] = useState('');
   const { hospitalId } = useParams();
 
@@ -34,11 +34,11 @@ const ContactAdmin= () => {
     }
 
     try {
-      await axios.post(`http://localhost:8000/api/v1/contacthospitaluploader/${hospitalId}/email`, {
+      await axios.post(`${import.meta.env.VITE_API_URL}/contacthospitaluploader/${hospitalId}/email`, {
         senderName: user.username,
         senderEmail: user.email,
         message: message,
-        hospitalId: hospitalId,
+        //hospitalId: hospitalId,
       });
 
       

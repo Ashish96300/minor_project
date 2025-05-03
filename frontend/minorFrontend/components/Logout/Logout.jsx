@@ -13,9 +13,9 @@ function Logout() {
         
         try {
             const response = await axios.post(
-                'http://localhost:8000/api/v1/users/logout',
+                `${import.meta.env.VITE_API_URL}/users/logout`,
                 {}, 
-                { withCredentials: true }   // <- Send cookies to backend
+                { withCredentials: true }  
             );
             console.log(response.data)
             setUser(null);
