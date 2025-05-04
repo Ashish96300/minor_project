@@ -1,7 +1,12 @@
 const errorMiddleware = (err, req, res, next) => {
   // Log detailed error stack trace in development mode
   if (process.env.NODE_ENV === 'development') {
-      console.error(err.stack);  // Log detailed error stack
+    console.error(err.stack);  // Log detailed error stack
+  }
+
+  // Check if headers are already sent, and return early if true
+  if (res.headersSent) {
+    return next(err); // Let Express handle it if headers are already sent
   }
 
   // Check if it's a custom ApiError or another known error type
@@ -11,9 +16,9 @@ const errorMiddleware = (err, req, res, next) => {
 
   // Return response with status and error details
   res.status(statusCode).json({
-      success: false,
-      message,
-      errors
+    success: false,
+    message,
+    errors
   });
 };
 
