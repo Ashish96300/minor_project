@@ -3,14 +3,13 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import errorMiddleware from "./midllewears/err.middlewear.js";
 const app = express();
-import dotenv from 'dotenv';
-dotenv.config();
 
-// Define the allowed origins. Make sure to include both your Vercel URLs.
+// Define the allowed origins. Add your new Vercel URL here.
 const allowedOrigins = [
   process.env.CORS_ORIGIN || 'http://localhost:5173',
   'https://minor-project-mrw1loqi9-ashishsen2609-gmailcoms-projects.vercel.app',
-  'https://minor-project-git-main-ashishsen2609-gmailcoms-projects.vercel.app' // Add the origin from the error message for good measure
+  'https://minor-project-git-main-ashishsen2609-gmailcoms-projects.vercel.app',
+  'https://minor-project-sable.vercel.app' // ADD THIS NEW ORIGIN
 ];
 
 const corsOptions = {
