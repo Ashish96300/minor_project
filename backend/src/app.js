@@ -1,48 +1,42 @@
-import express from "express"
-import cors from "cors"
-import cookieParser from "cookie-parser"
-import errorMiddleware from "./midllewears/err.middlewear.js"
-const app = express()
+import express from "express";
+import cors from "cors";
+import cookieParser from "cookie-parser";
+import errorMiddleware from "./midllewears/err.middlewear.js";
+const app = express();
+
+// Define the allowed origins. Make sure to include both your Vercel URLs.
+const allowedOrigins = [
+  process.env.CORS_ORIGIN || 'http://localhost:5173',
+  'https://minor-project-mrw1loqi9-ashishsen2609-gmailcoms-projects.vercel.app',
+  'https://minor-project-git-main-ashishsen2609-gmailcoms-projects.vercel.app' // Add the origin from the error message for good measure
+];
 
 const corsOptions = {
- origin: process.env.CORS_ORIGIN || 'http://localhost:5173',
-   credentials: true
- };
-  
-//   app.use(cors(corsOptions));
-//   app.options('/*', cors(corsOptions)); // <-- ✅ Fixes preflight error
-  
-// Middlewares
+  origin: function (origin, callback) {
+    if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true,
+};
+
+// Use the cors middleware with the defined options
 app.use(cors(corsOptions));
 
-// This handles all preflight OPTIONS requests regardless of route
-app.use((req, res, next) => {
-  if (req.method === 'OPTIONS') {
-    res.header('Access-Control-Allow-Origin', process.env.CORS_ORIGIN || 'http://localhost:5173');
-    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-    res.header('Access-Control-Allow-Headers', 'Content-Type');
-    res.header('Access-Control-Allow-Credentials', 'true');
-    return res.sendStatus(204);
-  }
-  next();
-});
-
-
-  
-
-app.use(express.json({limit: "16kb"}))                              /*data kisi bhi form m ara ho ,charo alag alag handle karenge */
-app.use(express.urlencoded({extended: true, limit: "16kb"}))
-app.use(express.static("public"))
-app.use(cookieParser())
-console.log(process.env.CORS_ORIGIN)
-
-
+// Middlewares
+app.use(express.json({ limit: "16kb" }));
+app.use(express.urlencoded({ extended: true, limit: "16kb" }));
+app.use(express.static("public"));
+app.use(cookieParser());
+console.log(process.env.CORS_ORIGIN);
 
 //routes import
-import userRouter from './routes/user.routes.js'
-import hospitalRouter from './routes/hospital.routes.js'
-import animalRouter from './routes/animal.routes.js'
-import fosterRouter from './routes/foster.routes.js'
+import userRouter from './routes/user.routes.js';
+import hospitalRouter from './routes/hospital.routes.js';
+import animalRouter from './routes/animal.routes.js';
+import fosterRouter from './routes/foster.routes.js';
 // import nodemailerRouter from './routes/nodemailer.routes.js'
 // import nodeRouter from './routes/nodemailer.hospital.routes.js'
 
@@ -56,10 +50,10 @@ import playlistRouter from "./routes/playlist.routes.js"s
 import dashboardRouter from "./routes/dashboard.routes.js"*/
 
 //routes declaration11s
-app.use("/api/v1/users", userRouter)
-app.use("/api/v1/hospital" ,hospitalRouter)
-app.use("/api/v1/animal" ,animalRouter)
-app.use("/api/v1/fosterHome" ,fosterRouter)
+app.use("/api/v1/users", userRouter);
+app.use("/api/v1/hospital", hospitalRouter);
+app.use("/api/v1/animal", animalRouter);
+app.use("/api/v1/fosterHome", fosterRouter);
 //app.use("/api/v1/contactowner" ,nodemailerRouter)
 //app.use("/api/v1/contacthospitaluploader",nodeRouter)
 
@@ -73,5 +67,5 @@ app.use("/api/v1/likes", likeRouter)
 //app.use("/api/v1/dashboard", dashboardRouter)*/
 
 // http://localhost:8000/api/v1/users/register
-app.use(errorMiddleware); 
-export { app }
+app.use(errorMiddleware);
+export { app };
