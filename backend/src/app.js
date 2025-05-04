@@ -3,6 +3,8 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import errorMiddleware from "./midllewears/err.middlewear.js";
 const app = express();
+import dotenv from 'dotenv';
+dotenv.config();
 
 // Define the allowed origins. Make sure to include both your Vercel URLs.
 const allowedOrigins = [
