@@ -16,12 +16,12 @@ import { HomePage } from '../components/Dashboard/HomePage/HomePage.jsx'
 import ExplorePage from '../components/Dashboard/HomePage/Features/Animal/Animal.jsx'
 import { AdoptPet, PutForAdoption } from '../components/Dashboard/HomePage/Features/Animal/SubFeatures.jsx'
 import ExplorePage2 from '../components/Dashboard/HomePage/Features/Hospital/Hospital.jsx'
-//import ContactForm from '../components/Dashboard/HomePage/Features/Animal/ContactOwner.jsx'
+import ContactForm from '../components/Dashboard/HomePage/Features/Animal/ContactOwner.jsx'
 import { RegisterHospital } from '../components/Dashboard/HomePage/Features/Hospital/SubHospital.jsx'
 import { RegisterFosterHome } from '../components/Dashboard/HomePage/Features/FosterHome/SubFosterHome.jsx'
 import ExplorePage3 from '../components/Dashboard/HomePage/Features/FosterHome/FosterHome.jsx'
 import { SearchHospital } from '../components/Dashboard/HomePage/Features/Hospital/SubHospital.jsx'
-//import ContactAdmin from '../components/Dashboard/HomePage/Features/Hospital/ContactAdmin.jsx'
+import ContactAdmin from '../components/Dashboard/HomePage/Features/Hospital/ContactAdmin.jsx'
 
 const router = createBrowserRouter([
   {
@@ -40,12 +40,12 @@ const router = createBrowserRouter([
       {path:'putforadoption',element:<PutForAdoption/>},
       {path:'adoptpet', element:<AdoptPet/>},
       {path:'hospital' ,element:<ExplorePage2/>},
-      //{path:'contactowner/:animalId' , element:<ContactForm/>},
+      {path:'contactowner/:animalId' , element:<ContactForm/>},
       {path:'registerhospital' ,element:<RegisterHospital/>},
       {path:'fosterhome' ,element:<ExplorePage3/>},
       {path:'registerhome' ,element:<RegisterFosterHome/>},
       {path:'gethospitals' ,element:<SearchHospital/>},
-      //{path:'contacthospitaluploader/:hospitalId' ,element:<ContactAdmin/>}
+      {path:'contacthospitaluploader/:hospitalId' ,element:<ContactAdmin/>}
     ]
   }
 ])
