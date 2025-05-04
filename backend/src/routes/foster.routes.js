@@ -5,11 +5,11 @@ import { authenticateUser } from "../midllewears/authentication.middlewear.js";
 
 const router =Router();
 
-        router.route("/Add").post(upload.fields([
+router.route("/Add").post(upload.fields([
             {name:"Avatar" ,maxCount:1},
             {name:"Image" ,maxCount:5},
         ]) ,authenticateUser ,registerHome)
-router.route("/Add").post(authenticateUser, registerHome);
+
 
 
 router.route("/Read").post(getAllfosterHome);
