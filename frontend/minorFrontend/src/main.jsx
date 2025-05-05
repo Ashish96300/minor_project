@@ -22,6 +22,8 @@ import { RegisterFosterHome } from '../components/Dashboard/HomePage/Features/Fo
 import ExplorePage3 from '../components/Dashboard/HomePage/Features/FosterHome/FosterHome.jsx'
 import { SearchHospital } from '../components/Dashboard/HomePage/Features/Hospital/SubHospital.jsx'
 import ContactAdmin from '../components/Dashboard/HomePage/Features/Hospital/ContactAdmin.jsx'
+import DonationPage from '../components/Dashboard/HomePage/Features/Donation/Donation.jsx'
+import DonationForm from '../components/Dashboard/HomePage/Features/Donation/SubDonation.jsx'
 
 const router = createBrowserRouter([
   {
@@ -45,7 +47,11 @@ const router = createBrowserRouter([
       {path:'fosterhome' ,element:<ExplorePage3/>},
       {path:'registerhome' ,element:<RegisterFosterHome/>},
       {path:'gethospitals' ,element:<SearchHospital/>},
-      {path:'contacthospitaluploader/:hospitalId' ,element:<ContactAdmin/>}
+      {path:'contacthospitaluploader/:hospitalId' ,element:<ContactAdmin/>},
+      { path: 'donation', element: <DonationPage /> },
+      { path: 'donation/form', element: <DonationForm /> },
+      { path:"donation/:donationId" ,element:<DonationForm />}
+
     ]
   }
 ])

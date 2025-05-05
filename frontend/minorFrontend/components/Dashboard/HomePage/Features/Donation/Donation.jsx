@@ -1,6 +1,9 @@
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-export default function ExplorePage2() {
+
+export default function DonationPage() {
+
+  const navigate = useNavigate();
   return (
     <div className="min-h-screen bg-gray-900 text-white flex items-center justify-center px-4">
       <div className="bg-gray-800 p-10 rounded-2xl shadow-2xl w-full max-w-md text-center">
@@ -10,18 +13,14 @@ export default function ExplorePage2() {
         </p>
 
         <div className="space-y-4">
-          <Link
-            to="#"
-            className="bg-green-500 hover:bg-green-600 transition-colors duration-300 text-white px-6 py-3 rounded-full block w-full font-semibold"
+       < button
+            type="button"
+            className="mt-4 px-6 py-2 bg-blue-500 text-white rounded-full hover:bg-blue-700"
+            
+            onClick={() => navigate('/donation/form')}
           >
             Make a Donation
-          </Link>
-          <Link
-            to="#"
-            className="bg-blue-500 hover:bg-blue-600 transition-colors duration-300 text-white px-6 py-3 rounded-full block w-full font-semibold"
-          >
-            Your Nearby Hospital
-          </Link>
+          </button>
         </div>
       </div>
     </div>

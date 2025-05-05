@@ -147,9 +147,10 @@ export function SearchHospital() {
   // Handle navigation to contact admin page
   const handleAdmin = () => {
     if (selectedHospital && selectedHospital._id) {
-      navigate(`/contacthosptaluploader/${selectedHospital._id}`);
+      navigate(`/contacthospitaluploader/${selectedHospital._id}`);
     }
   };
+
 
   // Fetch hospital data on component mount
   useEffect(() => {

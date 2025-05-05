@@ -53,7 +53,7 @@ export function HomePage() {
           <div className="bg-gray-800 p-6 rounded-2xl shadow-xl text-center">
             <h2 className="text-3xl font-bold mb-2">💖 Donations</h2>
             <p>Make a donation and support the cause</p>
-            <Link to="/donations">
+            <Link to="/donation">
               <button className="mt-4 bg-pink-500 hover:bg-pink-600 p-3 rounded-xl w-full font-semibold transition-all">
                 Explore Donations
               </button>
