@@ -1,55 +1,44 @@
-// 
+import mongoose from "mongoose";
 
-import mongoose from 'mongoose';
-
-const donationSchema = new mongoose.Schema(
-  {
-    donationItem: {
-      type: String,
-      required: true,
+const donateSchema =new mongoose.Schema({
+    donationBy:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'User'
     },
-    donationType: {
-      type: String,
-      required: true,
-      enum: ['Food', 'Medical', 'Essential'],
+    donationType:{
+        type:String,
+        required:true
+    },
+    donationItem:{
+        type:String,
+        required:true
+    },
+    donationItemImage:{
+        type:[String],
+        required:true
     },
     donatedTo: {
-      type: String,
-      required: true,
-      enum: ['Hospital', 'FosterHome'],
-    },
-    donatedToName: {
-      type: String,
-      required: true,
-    },
-    senderName: {
-      type: String,
-      required: true,
-    },
-    senderEmail: {
-      type: String,
-      required: true,
-      match: [/\S+@\S+\.\S+/, 'Please enter a valid email'],
-    },
-    message: {
-      type: String,
-      default: '',
-    },
-    files: [
-      {
-        type: String, // Store image URLs or file paths
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        refPath: 'donatedToModel'
       },
-    ],
-    donationStatus: {
-      type: String,
-      default: 'Pending', // You can track status: Pending, Approved, Rejected
-      enum: ['Pending', 'Approved', 'Rejected'],
-    },
-  },
-  { timestamps: true } // To track created and updated times
-);
+      donatedToModel: {
+        type: String,
+        required: true,
+        enum: ['Hospital', 'FosterHome']
+      },
+      message:{
+        type:String,
+        
+      },
+    //   senderName:{
+    //     type:mongoose.Schema.Types.ObjectId,
+    //     ref:'User',
+    //   },
+    //   senderEmail:{
+    //     type:mongoose.Schema.Types.ObjectId,
+    //     ref:'User',
+    //   },
+} ,{timestamps:true})
 
-// Create a model based on the schema
-const Donate = mongoose.model('Donation', donationSchema);
-
-export { Donate};
+export const Donate =mongoose.model('Donate',donateSchema)

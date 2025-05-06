@@ -1,7 +1,7 @@
-import { Donate } from "../models/donate.model.js";
-import { ApiResponse } from "../utils/ApiResponse.js";
-import { asyncHandler } from "../utils/asyncHandler.js";
-import { uploadOnCloudinary } from "../utils/cloudinary.js";
+// import { Donate } from "../models/donate.model.js";
+// import { ApiResponse } from "../utils/ApiResponse.js";
+// import { asyncHandler } from "../utils/asyncHandler.js";
+// import { uploadOnCloudinary } from "../utils/cloudinary.js";
 
 // const donatingItem = asyncHandler(async (req, res) => {
 //     const { donationItem, donationType } = req.body;
@@ -36,15 +36,16 @@ import { uploadOnCloudinary } from "../utils/cloudinary.js";
 //     return res.status(200).json(new ApiResponse(200, populatedDonation, "Donation Successful"));
 // });
 
-// 
-
-// import { Donate } from '../models/donate.model';  // Import your donation model
-// import { ApiError } from '../utils/ApiError';      // Import your custom error handler
-// import { asyncHandler } from '../utils/asyncHandler'; // Import asyncHandler
-// import { uploadOnCloudinary } from '../utils/cloudinary'; // Assuming you have cloudinary upload logic
+import {asyncHandler} from "../utils/asyncHandler.js";
+import {ApiError} from "../utils/ApiError.js";
+import {ApiResponse} from "../utils/ApiResponse.js";
+import { uploadOnCloudinary } from "../utils/cloudinary.js";
+import {Donate} from "../models/donate.model.js";
+import {Hospital} from "../models/hospitals.model.js";
+import {FosterHome} from "../models/fosterHome.model.js";
 
 const donatingItem = asyncHandler(async (req, res) => {
-  const { donationItem, donationType, donatedToModel, donatedToName, message, senderName, senderEmail } = req.body;
+  const { donationItem, donationType, donatedToModel, donatedTo , message } = req.body;
   const donationBy = req.user._id;
 
   // Step 1: Validate donatedToModel
@@ -52,56 +53,59 @@ const donatingItem = asyncHandler(async (req, res) => {
     throw new ApiError(400, "Invalid donatedToModel. Must be 'Hospital' or 'FosterHome'");
   }
 
-  // Step 2: Find the target Hospital or FosterHome by name
+  // Step 2: Select model and create query based on type
   const Model = donatedToModel === 'Hospital' ? Hospital : FosterHome;
 
-  const donatedToDoc = await Model.findOne({
-    $or: [
-      { name: donatedToName },
-      { hospitalName: donatedToName },
-      { HomeName: donatedToName }
-    ]
-  });
+  const query = donatedToModel === 'Hospital'
+    ? { $or: [{ name: donatedTo }, { hospitalName: donatedTo }] }
+    : { $or: [{ name: donatedTo }, { HomeName: donatedTo }] };
+
+  const donatedToDoc = await Model.findOne(query);
 
   if (!donatedToDoc) {
-    throw new ApiError(404, `${donatedToModel} with name '${donatedToName}' not found`);
+    throw new ApiError(404, `${donatedToModel} with name '${donatedTo}' not found`);
   }
 
-  const donatedTo = donatedToDoc._id;
+  const donatedToId = donatedToDoc._id;
 
-  // Step 3: Handle image upload (multiple images for the donation item)
-  const donationItemImageLocalPath = req.files?.map(file => file.path) || [];
+  // Step 3: Handle image upload
+  //const donationItemImageLocalPath = req.files?.map(file => file.path) || [];
+  const donationItemImageLocalPath  = req.files?.donationItemImage?.map(file => file.path) || [];
 
   if (donationItemImageLocalPath.length === 0) {
     throw new ApiError(400, "Donation item image is required");
   }
 
-  const donationItemImage = await Promise.all(
-    donationItemImageLocalPath.map(uploadOnCloudinary)
-  );
+  let donationItemImage;
+  try {
+    donationItemImage = await Promise.all(
+      donationItemImageLocalPath.map(uploadOnCloudinary)
+    );
+  } catch (err) {
+    throw new ApiError(500, "Cloudinary upload failed");
+  }
 
   if (!donationItemImage || donationItemImage.length === 0) {
     throw new ApiError(400, "Failed to upload donation item image");
   }
 
-  // Step 4: Create a donation entry in the database
+  // Step 4: Create donation record
   const donate = await Donate.create({
     donationItem,
     donationType,
     donationItemImage: donationItemImage.map(img => img.url),
     donationBy,
-    donatedTo,
+    donatedTo: donatedToId,
     donatedToModel,
-    senderName,
-    senderEmail,
     message
+    
   });
 
-  // Step 5: Populate the donation with relevant data and return a response
+  // Step 5: Populate response
   const populatedDonation = await Donate.findById(donate._id)
-    .populate('donationBy', 'username email')  // Populate the donor's info
+    .populate('donationBy', 'username email')
     .populate({
-      path: 'donatedTo', 
+      path: 'donatedTo',
       model: donatedToModel
     })
     .lean();
@@ -110,15 +114,12 @@ const donatingItem = asyncHandler(async (req, res) => {
     ? populatedDonation.donatedTo.hospitalName || populatedDonation.donatedTo.name
     : populatedDonation.donatedTo.HomeName || populatedDonation.donatedTo.name;
 
-  // Step 6: Respond with the populated donation data
-  return res.status(200).json({
-    status: 200,
-    message: "Donation Successful",
-    data: {
+  return res.status(200).json(
+    new ApiResponse(200, {
       ...populatedDonation,
-      donatedToName: displayName
-    }
-  });
+      displayName
+    }, "Donation Successful")
+  );
 });
 
 export { donatingItem };
