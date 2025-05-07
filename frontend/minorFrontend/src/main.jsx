@@ -24,6 +24,10 @@ import { SearchHospital } from '../components/Dashboard/HomePage/Features/Hospit
 import ContactAdmin from '../components/Dashboard/HomePage/Features/Hospital/ContactAdmin.jsx'
 import DonationPage from '../components/Dashboard/HomePage/Features/Donation/Donation.jsx'
 import DonationForm from '../components/Dashboard/HomePage/Features/Donation/SubDonation.jsx'
+import ExplorePage5 from '../components/Dashboard/HomePage/Features/Emergency/Emergency.jsx'
+import {EmergencyForm ,EmergencyList}from '../components/Dashboard/HomePage/Features/Emergency/SubEmergency.jsx'
+import { SearchFosterHome } from '../components/Dashboard/HomePage/Features/FosterHome/SubFosterHome.jsx'
+
 
 const router = createBrowserRouter([
   {
@@ -50,7 +54,11 @@ const router = createBrowserRouter([
       {path:'contacthospitaluploader/:hospitalId' ,element:<ContactAdmin/>},
       { path: 'donation', element: <DonationPage /> },
       { path: 'donation/form', element: <DonationForm /> },
-      { path:"donation/:donationId" ,element:<DonationForm />}
+      { path:"donation/:donationId" ,element:<DonationForm />},
+      {path:'emergency' ,element:<ExplorePage5/>},
+      {path:'emergency/form' ,element:<EmergencyForm/>},
+      {path:'emergency/list' ,element:<EmergencyList/>},
+      {path:'searchfosterhome' ,element:<SearchFosterHome/>},
 
     ]
   }

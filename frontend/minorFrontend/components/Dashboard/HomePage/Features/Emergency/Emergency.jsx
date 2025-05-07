@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-export default function ExplorePage2() {
+export default function ExplorePage5() {
   return (
     <div className="min-h-screen bg-gray-900 text-white flex items-center justify-center px-4">
       <div className="bg-gray-800 p-10 rounded-2xl shadow-2xl w-full max-w-md text-center">
@@ -11,17 +11,18 @@ export default function ExplorePage2() {
 
         <div className="space-y-4">
           <Link
-            to="#"
+            to="/emergency/form"
             className="bg-green-500 hover:bg-green-600 transition-colors duration-300 text-white px-6 py-3 rounded-full block w-full font-semibold"
           >
-            Register a Hospital
+            Report an Emergency 
           </Link>
+
           <Link
-            to="#"
-            className="bg-blue-500 hover:bg-blue-600 transition-colors duration-300 text-white px-6 py-3 rounded-full block w-full font-semibold"
-          >
-            Your Nearby Hospital
+            to="/emergency/list"
+            className="bg-blue-500 hover:bg-blue-600 transition-colors duration-300 text-white px-6 py-3 rounded-full block w-full font-semibold">
+            Your Nearby Emergency
           </Link>
+        
         </div>
       </div>
     </div>

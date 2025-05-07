@@ -36,6 +36,7 @@ export function HomePage() {
                 Explore Hospitals
               </button>
             </Link>
+
           </div>
   
           {/* 🏡 Foster Homes */}
@@ -64,11 +65,12 @@ export function HomePage() {
           <div className="bg-gray-800 p-6 rounded-2xl shadow-xl text-center md:col-span-2">
             <h2 className="text-3xl font-bold mb-2">☎️ Emergency Hotline</h2>
             <p>Need immediate help? Here are the numbers</p>
-            <Link to="/emergency-hotline">
+            <Link to="/emergency">
               <button className="mt-4 bg-pink-500 hover:bg-pink-600 p-3 rounded-xl w-full font-semibold transition-all">
                 Explore Emergency Hotlines
               </button>
             </Link>
+            
           </div>
           
         </div>

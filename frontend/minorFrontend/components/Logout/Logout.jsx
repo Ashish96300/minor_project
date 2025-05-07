@@ -11,10 +11,13 @@ function Logout() {
     console.log("User before logout:", user); // This will now actually print
     const handleLogout = async () => {
       try {
+       // const token = localStorage.getItem('token')
         const response = await axios.post(
           `${import.meta.env.VITE_API_URL}/users/logout`,
           {},
-          { withCredentials: true }
+          { withCredentials: true },
+        
+          
         );
         console.log("Logout response:", response.data);
         setUser(null);
