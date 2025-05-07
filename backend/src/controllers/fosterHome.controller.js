@@ -54,19 +54,44 @@ const registerHome = asyncHandler(async(req ,res)=>{
 
 })
 
-const getAllfosterHome=asyncHandler(async(req ,res)=>{
-    const findfosterHOme=await FosterHome.find()
+// const getAllfosterHome=asyncHandler(async(req ,res)=>{
+//     const findfosterHome=await FosterHome.find()
     
     
 
-    if(!findfosterHOme.length === 0){
-        throw new ApiError(400 ,'No fosterHome details found')
-    }
+//     if(!findfosterHome.length === 0){
+//         throw new ApiError(400 ,'No fosterHome details found')
+//     }
    
-    return res
-    .status(200)
-    .json(new ApiResponse(200 ,findfosterHOme ,'foster home details'))
-})
+//     return res
+//     .status(200)
+//     .json(new ApiResponse(200 ,findfosterHOme ,'foster home details'))
+// })
+
+const getAllfosterHome = asyncHandler(async (req, res) => {
+    try {
+        const findfosterHome=await FosterHome.find()
+    
+        .populate('Admin', 'username email'); 
+  
+
+      if (findfosterHome.length === 0) {
+        return res
+          .status(404)
+          .json(new ApiResponse(404, [], 'No foster home details found'));
+      }
+  
+      return res
+        .status(200)
+        .json(new ApiResponse(200, { HomeNames: findfosterHome }, 'All foster home details'));
+    } catch (error) {
+      return res
+        .status(500)
+        .json(new ApiResponse(500, null, 'Server Error'));
+    }
+  });
+
+
 const updatefosterHome =asyncHandler(async(req ,res)=>{
     const {fosterHomeId}=req.params;
     const loggedInAdmin=req.user._id;

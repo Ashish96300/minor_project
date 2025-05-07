@@ -10,8 +10,6 @@ router.route("/Add").post(upload.fields([
             {name:"Image" ,maxCount:5},
         ]) ,authenticateUser ,registerHome)
 
-
-
 router.route("/Read").post(getAllfosterHome);
 
 router.route("/Update").post(updatefosterHome);
