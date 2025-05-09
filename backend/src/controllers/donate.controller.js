@@ -114,12 +114,16 @@ const donatingItem = asyncHandler(async (req, res) => {
     ? populatedDonation.donatedTo.hospitalName || populatedDonation.donatedTo.name
     : populatedDonation.donatedTo.HomeName || populatedDonation.donatedTo.name;
 
-  return res.status(200).json(
-    new ApiResponse(200, {
-      ...populatedDonation,
-      displayName
-    }, "Donation Successful")
-  );
+ // Step 6: Return the donation and donationId
+return res.status(200).json(
+  new ApiResponse(200, {
+    ...populatedDonation,
+    displayName,
+    donate,
+    donationId: donate._id 
+  }, "Donation Successful")
+);
+
 });
 
 export { donatingItem };

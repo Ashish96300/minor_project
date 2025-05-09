@@ -2,27 +2,34 @@ import nodemailer from "nodemailer";  // Corrected import
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { Donate } from "../models/donate.model.js"; // Assuming Donate is the model name
 
-const givedonation = asyncHandler(async (req, res) => {
-    const { message, senderName, senderEmail } = req.body;
-    const { donationId } = req.params;
-    
-    console.log("Request received: ", { message, senderName, senderEmail, donationId });
+// formData.append("donationItem", donationItem);
+// formData.append("donationType", donationType);
+// formData.append("message", message);
+// formData.append("donatedTo", donatedTo);
+// formData.append("donatedToModel", donatedToModel);
 
-    if (!message || !senderEmail || !donationId) {
+const givedonation = asyncHandler(async (req, res) => {   
+    console.log("givedonation route hit");          
+    const { message, donationBy } = req.body;
+    const { donationId } = req.params;
+    console.log(donationId)
+    //console.log("Request received: ", { message, senderName, senderEmail, donationId });
+
+    if (!message || !donationId) {
         return res.status(400).json({ message: "Donation ID, message, and sender email are required" });
     }
 
-    const donation = await Donate.findById(donationId).populate("donatedBy", "email username donationItem donationType");
+    const donation = await Donate.findById(donationId).populate("donationBy", "email username donationItem donationType");
     
     if (!donation) {
         return res.status(404).json({ message: "Donation not found" });
     }
 
-    const ownerEmail = donation.donatedBy.email;
-    const donor = donation.donatedBy.username;
+    const ownerEmail = donation.donationBy.email;
+    const donor = donation.donationBy.username;
     const donationItem = donation.donationItem;
     const donationType = donation.donationType;
-
+    console.log(ownerEmail)
     if (!ownerEmail) {
         return res.status(400).json({ message: "Owner email not found" });
     }
@@ -57,6 +64,7 @@ const givedonation = asyncHandler(async (req, res) => {
         console.error("Error sending email:", error);
         return res.status(500).json({ message: "Failed to send email" });
     }
+    
 });
 
 export default givedonation;

@@ -42,7 +42,7 @@ import fosterRouter from './routes/foster.routes.js';
 import nodemailerRouter from './routes/nodemailer.routes.js'
 import nodeRouter from './routes/nodemailer.hospital.routes.js'
 import donateRouter from './routes/donation.routes.js'
-//import nodemail from './routes/nodemailer.donation.routes.js'
+import nodemail from './routes/nodemailer.donation.routes.js'
 import emergencyRoutes from "./routes/emergency.routes.js";
 
 
@@ -65,7 +65,7 @@ app.use("/api/v1/fosterHome", fosterRouter);
 app.use("/api/v1/contactowner" ,nodemailerRouter);
 app.use("/api/v1/contacthospitaluploader",nodeRouter);
 app.use('/api/v1/donation' ,donateRouter);
-//app.use('/api/v1/givedonation', nodemail);
+app.use('/api/v1/givedonation', nodemail);
 app.use("/api/v1/emergency", emergencyRoutes);
 
 /*app.use("/api/v1/healthcheck", healthcheckRouter)
