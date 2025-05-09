@@ -54,7 +54,7 @@ const router = createBrowserRouter([
       {path:'contacthospitaluploader/:hospitalId' ,element:<ContactAdmin/>},
       { path: 'donation', element: <DonationPage /> },
       { path: 'donation/form', element: <DonationForm /> },
-      { path:"donation/:donationId" ,element:<DonationForm />},
+      { path:"givedonation/:donationId" ,element:<DonationForm />},
       {path:'emergency' ,element:<ExplorePage5/>},
       {path:'emergency/form' ,element:<EmergencyForm/>},
       {path:'emergency/list' ,element:<EmergencyList/>},

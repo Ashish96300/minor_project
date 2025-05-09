@@ -27,20 +27,22 @@ const DonationForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-
+  
     const formData = new FormData();
     formData.append("donationItem", donationItem);
     formData.append("donationType", donationType);
     formData.append("message", message);
     formData.append("donatedTo", donatedTo);
     formData.append("donatedToModel", donatedToModel);
-
+  
     donationItemImage.forEach((file) => {
       formData.append("donationItemImage", file);
     });
-
+  
     try {
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem("token");
+  
+      // ✅ 1. Submit donation
       const response = await axios.post(
         `${import.meta.env.VITE_API_URL}/donation/donate`,
         formData,
@@ -51,22 +53,47 @@ const DonationForm = () => {
           },
         }
       );
-      toast.success(response.data.message || "Donation submitted successfully!");
+      
+      toast.success("Donation submitted successfully!");
+      //const donationId = response.data.data._id;
+      try{
+     const donationId = response.data.data.donationId; 
+      if (donationId) {
+       
+        await axios.post(
+          `${import.meta.env.VITE_API_URL}/givedonation/${donationId}/email`,
+          {
+            message,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+      }
+    }
+    catch (error) {
 
+        console.error("Error sending email:", error); 
+        toast.error("Failed to send confirmation email.");
+
+      }
+    
       setDonationItem("");
       setDonationType("");
       setMessage("");
       setDonatedToModel("Hospital");
       setDonatedTo("");
       setDonationItemImage([]);
-    } catch (error) {
-      toast.error(
-        error.response?.data?.message || "Something went wrong. Please try again."
-      );
+    } catch(error) {
+      console.error(error);
+      toast.error(error.response?.data?.message || "Error submitting donation");
     } finally {
       setLoading(false);
     }
   };
+  
 
   return (
     <div className="min-h-screen bg-gray-900 flex items-center justify-center p-4">
@@ -152,8 +179,10 @@ const DonationForm = () => {
 
           <button
             type="submit"
+            
             disabled={loading}
             className="w-full bg-violet-600 hover:bg-violet-700 text-white py-3 rounded-xl font-semibold transition duration-200"
+            
           >
             {loading ? "Submitting..." : "Submit Donation"}
           </button>
