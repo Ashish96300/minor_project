@@ -11,6 +11,8 @@ import { Donate } from "../models/donate.model.js"; // Assuming Donate is the mo
 const givedonation = asyncHandler(async (req, res) => {   
     console.log("givedonation route hit");          
     const { message, donationBy } = req.body;
+    const files = req.files?.donationItemImage || [];
+
     const { donationId } = req.params;
     console.log(donationId)
     //console.log("Request received: ", { message, senderName, senderEmail, donationId });
@@ -55,8 +57,17 @@ const givedonation = asyncHandler(async (req, res) => {
                 <p><strong>Donated By:</strong> ${donor}</p>
                 <p><strong>Type:</strong> ${donationType}</p>
                 <p><strong>Message:</strong> ${message}</p>
+                 ${files.map((file, index) => `
+                    <p><strong>Image ${index + 1}:</strong></p>
+                    <img src="cid:donationItemImage${index}" style="max-width: 300px;" />
+                `).join('')}
                 <p>Please check your Little Paws dashboard for more details.</p>
             `,
+            attachments: files.map((file, index) => ({
+                filename: file.originalname,
+                content: file.buffer,
+                cid: `donationItemImage${index}`
+            }))
         });
 
         return res.status(200).json({ message: "Email sent successfully" });
