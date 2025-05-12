@@ -6,7 +6,7 @@ const getAnimalNews = asyncHandler(async (req, res) => {
     const response = await axios.get(
         `https://newsapi.org/v2/everything`,{
         params:{
-        q:'animal welfare OR pet care OR wildlife',
+        q:'animal welfare OR pet care OR wildlife OR animal rights OR animal rescue OR animal',
         language:'en',
         sortBy:'publishedAt',
         pageSize:5,
