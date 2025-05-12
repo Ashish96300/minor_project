@@ -72,7 +72,9 @@ const DonationForm = () => {
           }
         );
       }
+      toast.success(`Email Sent To ${donatedTo}`);
     }
+    
     catch (error) {
 
         console.error("Error sending email:", error); 

@@ -2,6 +2,7 @@
 
 import { Link, useNavigate } from "react-router-dom";
 import { Dog } from "lucide-react";
+import AnimalNews from "../News/News";
 
 export default function Hero() {
   const navigate = useNavigate();
@@ -17,9 +18,11 @@ export default function Hero() {
           <h3 className="text-xl text-orange-300 font-medium mb-2">
             Where Love Meets Companionship
           </h3>
+          
           <p className="text-base md:text-lg text-gray-300 mb-6">
             Your trusted companion platform for finding and helping adorable little paws.
           </p>
+          
           <div className="flex flex-wrap gap-4 mt-4">
             <button
               onClick={() => navigate("/register")}
@@ -45,30 +48,9 @@ export default function Hero() {
           />
         </div>
       </div>
-
+    <AnimalNews/>
       {/* Social Media Icons */}
-      <div className="mt-12 px-4">
-        <h4 className="text-lg text-gray-300 mb-4 font-semibold">Follow Us</h4>
-        <div className="flex flex-wrap gap-6">
-          {[
-            { href: "https://www.youtube.com", img: "youtube.png", label: "YouTube" },
-            { href: "https://www.twitter.com", img: "twitter.png", label: "Twitter" },
-            { href: "https://www.whatsapp.com", img: "whatsapp.png", label: "WhatsApp" },
-            { href: "https://www.instagram.com", img: "instagram.png", label: "Instagram" },
-          ].map(({ href, img, label }) => (
-            <a
-              key={label}
-              href={href}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={label}
-              className="bg-gray-800 p-3 rounded-full hover:bg-orange-500 transition duration-300"
-            >
-              <img src={img} alt={label} className="w-6 h-6" />
-            </a>
-          ))}
-        </div>
-      </div>
+    
 
       {/* Glow Border Animation */}
       <style>

@@ -43,7 +43,7 @@ const ContactAdmin= () => {
       });
 
       
-      toast('Email Sent Successfully', {
+      toast.success('Email Sent Successfully', {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,

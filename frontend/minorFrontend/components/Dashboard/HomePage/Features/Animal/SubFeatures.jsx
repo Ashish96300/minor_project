@@ -60,6 +60,7 @@ export function PutForAdoption() {
 
   return (
     <div className="p-6 text-white bg-gray-900 min-h-screen">
+  
       <ToastContainer /> 
       <h1 className="text-3xl font-bold mb-4">Put for Adoption</h1>
       <form className="bg-gray-800 p-6 rounded-xl space-y-4 max-w-xl mx-auto" onSubmit={handleSubmit}>

@@ -62,7 +62,10 @@ export const EmergencyForm = () => {
   };
 
   return (
-    <div className="relative bg-cover bg-center bg-dark-gradient h-screen" style={{ backgroundImage: 'url("https://www.w3schools.com/w3images/forest.jpg")' }}>
+    <div className="relative bg-cover bg-center bg-dark-gradient h-screen" 
+    //style={{ backgroundImage: 'url("https://www.w3schools.com/w3images/forest.jpg")' }}
+    style={{ backgroundImage: `url("/nature2.jpg")` }}
+    >
       <div className="absolute inset-0 bg-black opacity-50"></div>
       <div className="relative z-10 flex justify-center items-center h-full text-white">
         <div className="bg-gray-900 p-6 rounded-xl shadow-lg max-w-lg w-full space-y-6">
