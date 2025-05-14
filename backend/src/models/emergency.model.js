@@ -13,6 +13,7 @@ const emergencySchema = new mongoose.Schema({
   emergencyImages:{
     type: [String], 
     required: true,
+  
   },
   raisedBy: {
     type: mongoose.Schema.Types.ObjectId,

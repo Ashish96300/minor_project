@@ -226,10 +226,10 @@ const refreshAccessToken=asyncHandler(async(req,res)=>{
 const changeCurrentPassword = asyncHandler(async(req ,res)=>{
     const{oldPassword ,newPassword}=req.body
     
-    const user = await user.findById(req.user?._id)
+    const user = await User.findById(req.user?._id)
     const isPasswordCorrect= await user.isPasswordCorrect(oldPassword)
 
-    if(isPasswordCorrect){
+    if(!isPasswordCorrect){
         throw new ApiError(400 ,'invalid old password')
     }
     user.password =newPassword
@@ -251,7 +251,7 @@ const getCurrentUSer =asyncHandler(async(req,res)=>{
 const updateAccountDetails =asyncHandler(async(req ,res)=>{
     const{username ,email }=req.body
 
-    if (username||email) {
+    if (!username||!email) {
         throw new ApiError(400 ,"all fields req")
     }
 
@@ -270,27 +270,37 @@ return res
 .json(new ApiResponse(200 ,user ,"account details updated"))
 })
 
-const updateUserAvatar =asyncHandler(async(req ,res)=>{
-    const avatarLocalPath = req.file?.path
+// 
+const updateUserAvatar = asyncHandler(async (req, res) => {
+    const avatarLocalPath = req.file?.path;
 
-    if(!avatarLocalPath){
-        throw new ApiError(400 ,"avatar file missing")
+    if (!avatarLocalPath) {
+        throw new ApiError(400, "Avatar file missing");
     }
-    const avatar =await uploadOnCloudinary(avatarLocalPath)
 
-    if(!avatar.url){
-        throw new ApiError(400 ,"error while uploading on avatar")
+    const avatar = await uploadOnCloudinary(avatarLocalPath);
+
+    if (!avatar.url) {
+        throw new ApiError(400, "Error while uploading avatar to Cloudinary");
     }
+
     const user = await User.findByIdAndUpdate(
         req.user?._id,
         {
-            $set:{
-                avatar:avatar.url
+            $set: {
+                avatar: avatar.url
             }
-        },{new:true}
-    ).select("-password")
-    return res.status.json(new ApiResponse(200 ,user ,"avatar update successfully"))
-})
+        },
+        { new: true }
+    ).select("-password");
+
+    if (!user) {
+        throw new ApiError(404, "User not found");
+    }
+
+    return res.status(200).json(new ApiResponse(200, user, "Avatar updated successfully"));
+});
+
 
 
 

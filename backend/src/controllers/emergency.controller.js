@@ -9,7 +9,7 @@ export const raiseEmergency = async (req, res) => {
       return res.status(400).json({ message: "Emergency images are required" });
     }
 
-    // ⬇️ Upload and keep the full image object
+ 
     const emergencyImages = await Promise.all(
       imagePaths.map(async (imagePath) => {
         const uploadedImage = await uploadOnCloudinary(imagePath); // returns { url, public_id, ... }
@@ -21,7 +21,7 @@ export const raiseEmergency = async (req, res) => {
       title: req.body.title,
       description: req.body.description,
       location: req.body.location,
-      emergencyImages,
+      emergencyImages:emergencyImages.map(img => img.url),
       priority: req.body.priority,
       raisedBy: req.user._id,
     });
@@ -33,7 +33,7 @@ export const raiseEmergency = async (req, res) => {
     res.status(500).json({ message: "Failed to raise emergency", error: err.message });
   }
 };
-
+ 
 
 // Create an emergency
 export const createEmergency = async (req, res) => {
