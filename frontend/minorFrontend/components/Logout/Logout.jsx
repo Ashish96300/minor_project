@@ -8,7 +8,7 @@ function Logout() {
   const { setUser, user } = useContext(UserContext);
 
   useEffect(() => {
-    console.log("User before logout:", user); // This will now actually print
+    console.log("User before logout:", user);
     const handleLogout = async () => {
       try {
        // const token = localStorage.getItem('token')
@@ -31,7 +31,7 @@ function Logout() {
     handleLogout();
   }, []);
 
-  return null; // No UI needed
+  return null; 
 }
 
 export default Logout;

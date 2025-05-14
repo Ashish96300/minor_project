@@ -1,6 +1,7 @@
 import { useState ,useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { Style } from "../Style";
 
 export function RegisterFosterHome() {
     const [FosterName ,sethomeName] = useState('');
@@ -37,7 +38,7 @@ export function RegisterFosterHome() {
         }
     );
     console.log(response.data);
-          toast.success("Hospital successfully registered! 🎉");
+          toast.success("foster home successfully registered! 🎉");
     
           sethomeName('');
           setEmail('');
@@ -55,8 +56,9 @@ export function RegisterFosterHome() {
 
     return ( 
         <div className="min-h-screen bg-gray-900 text-white flex items-center justify-center px-4">
-      <div className="w-full max-w-xl bg-gray-800 p-8 rounded-2xl shadow-lg">
-        <h1 className="text-3xl font-bold mb-6 text-center">Register a Hospital</h1>
+          <Style/>
+      <div className="w-full max-w-xl bg-gray-800 p-8 rounded-2xl shadow-lg glow-border">
+        <h1 className="text-3xl font-bold mb-6 text-center">Register a Foster Home</h1>
         <form onSubmit={handleSubmit} className="space-y-4">
           <input
             type="text"
@@ -109,7 +111,7 @@ export function RegisterFosterHome() {
           </div>
 
           <div>
-            <label className="block mb-1 text-sm font-medium">Hospital Images (Multiple)</label>
+            <label className="block mb-1 text-sm font-medium">foster home Images (Multiple)</label>
             <input
               type="file"
               multiple

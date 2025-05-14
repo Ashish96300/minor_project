@@ -3,7 +3,7 @@ import axios from "axios";
 import { ToastContainer, toast } from 'react-toastify'; 
 import 'react-toastify/dist/ReactToastify.css'; 
 import { Navigate, useNavigate } from "react-router-dom";
-
+import { Style } from "../Style";
 
 export function PutForAdoption() {
   const [age, setAge] = useState("");
@@ -60,10 +60,13 @@ export function PutForAdoption() {
 
   return (
     <div className="p-6 text-white bg-gray-900 min-h-screen">
-  
+
       <ToastContainer /> 
       <h1 className="text-3xl font-bold mb-4">Put for Adoption</h1>
-      <form className="bg-gray-800 p-6 rounded-xl space-y-4 max-w-xl mx-auto" onSubmit={handleSubmit}>
+      <Style/>
+      <form 
+      
+       className="bg-gray-800 p-6 rounded-xl space-y-4 max-w-xl mx-auto glow-border" onSubmit={handleSubmit}>
         <input
           type="number"
           placeholder="Age"
@@ -119,7 +122,7 @@ export function PutForAdoption() {
         <input
           type="file"
           onChange={(e) => setImage(e.target.files[0])}
-          className="w-full text-white"
+          className="w-full text-white file:bg-pink-600 file:border-none file:px-4 file:py-2 file:rounded file:text-sm bg-gray-700"
         />
         <button type="submit" className="bg-pink-500 hover:bg-pink-600 w-full p-2 rounded">
           Submit

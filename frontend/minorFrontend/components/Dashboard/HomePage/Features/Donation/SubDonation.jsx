@@ -3,6 +3,7 @@ import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import UserContext from "../../../../../src/context/Usercontext";
 import "react-toastify/dist/ReactToastify.css";
+import { Style } from "../Style";
 
 const DonationForm = () => {
   const [donationItem, setDonationItem] = useState("");
@@ -100,8 +101,9 @@ const DonationForm = () => {
   return (
     <div className="min-h-screen bg-gray-900 flex items-center justify-center p-4">
       <ToastContainer position="top-center" autoClose={3000} />
+      <Style/>
 
-      <div className="bg-gray-800/80 backdrop-blur-md text-white rounded-2xl p-8 max-w-xl w-full shadow-lg border border-gray-700">
+      <div className="bg-gray-800/80 backdrop-blur-md text-white rounded-2xl p-8 max-w-xl w-full shadow-lg border border-gray-700 glow-border">
         <h2 className="text-3xl font-bold text-violet-400 mb-6 text-center">👐 Donate an Item</h2>
 
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -157,7 +159,7 @@ const DonationForm = () => {
             multiple
             accept="image/*"
             onChange={handleFileChange}
-            className="w-full text-sm text-gray-300"
+            className="w-full text-white file:bg-violet-600 file:border-none file:px-4 file:py-2 file:rounded file:text-sm bg-gray-700"
             required
           />
 

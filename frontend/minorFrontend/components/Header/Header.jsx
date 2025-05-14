@@ -1,15 +1,17 @@
-import React, { useContext } from 'react'
+import React, { useContext  } from 'react'
 import {Link, NavLink} from 'react-router-dom'
 import UserContext from '../../src/context/Usercontext';
 import Profile from '../profile/Profile';
 import Logout from '../Logout/Logout';
-
+import { useNavigate } from 'react-router-dom';
 //{!user ? ( <>...</>) : (<>...</>)}
 
 export default function Header() {
-
+    const navigate = useNavigate();
     const {user} = useContext(UserContext);
-    const handleLogout = Logout();
+    const handleLogout = () => {
+        navigate('/logout');
+      };
     return (
           <header className="shadow sticky z-50 top-0">
             <nav className="bg-neutral-900 text-white border-b border-gray-700 shadow px-4 lg:px-6 py-2.5">
@@ -36,13 +38,14 @@ export default function Header() {
                                 logout
                     </button>
                     <Link
-                        to="#"
+                        to="/updatedetails"
                         >
-                    </Link>
-                        <img src={user.avatar} 
+                            <img src={user.avatar} 
                         alt="avatar" 
                         className='w-14 h-14 border-radius rounded-4xl ring-2 ring-pink-600'/>
         
+                    </Link>
+                        
                         </div>
                     )
                     :

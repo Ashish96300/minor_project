@@ -11,6 +11,7 @@ import Login from '../components/Login/Login.jsx'
 import Register from '../components/Register/Register.jsx'
 import Contact from '../components/Contact/contact.jsx'
 import LearnMore from '../components/learnMore/learnMore.jsx'
+import Logout from '../components/Logout/Logout.jsx'
 //import HomePage from '../components/Dashboard/HomePage/HomePage.jsx'
 import { HomePage } from '../components/Dashboard/HomePage/HomePage.jsx'
 import ExplorePage from '../components/Dashboard/HomePage/Features/Animal/Animal.jsx'
@@ -27,6 +28,7 @@ import DonationForm from '../components/Dashboard/HomePage/Features/Donation/Sub
 import ExplorePage5 from '../components/Dashboard/HomePage/Features/Emergency/Emergency.jsx'
 import {EmergencyForm ,EmergencyList}from '../components/Dashboard/HomePage/Features/Emergency/SubEmergency.jsx'
 import { SearchFosterHome } from '../components/Dashboard/HomePage/Features/FosterHome/SubFosterHome.jsx'
+import UpdateProfile from '../components/Profileupdate/Profileupadtion.jsx'
 
 
 const router = createBrowserRouter([
@@ -59,6 +61,8 @@ const router = createBrowserRouter([
       {path:'emergency/form' ,element:<EmergencyForm/>},
       {path:'emergency/list' ,element:<EmergencyList/>},
       {path:'searchfosterhome' ,element:<SearchFosterHome/>},
+      {path:'updatedetails' ,element:<UpdateProfile/>},
+      {path:'logout' ,element:<Logout/>},
 
     ]
   }

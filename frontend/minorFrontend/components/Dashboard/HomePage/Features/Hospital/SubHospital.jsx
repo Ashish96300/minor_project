@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState ,useEffect} from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { Style } from "../Style";
 
 export function RegisterHospital() {
   const [hospitalName, setHospitalName] = useState('');
@@ -67,7 +68,8 @@ export function RegisterHospital() {
 
   return (
     <div className="min-h-screen bg-gray-900 text-white flex items-center justify-center px-4">
-      <div className="w-full max-w-xl bg-gray-800 p-8 rounded-2xl shadow-lg">
+    <Style/>
+      <div className="w-full max-w-xl bg-gray-800 p-8 rounded-2xl shadow-lg glow-border">
         <h1 className="text-3xl font-bold mb-6 text-center">Register a Hospital</h1>
         <form onSubmit={handleSubmit} className="space-y-4">
           <input

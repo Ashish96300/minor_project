@@ -1,6 +1,9 @@
 import React, { useState ,useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { Style } from "../Style";
+import UserContext from "../../../../../src/context/Usercontext";
+import { useContext } from "react";
 
 export const EmergencyForm = () => {
   const [title, setTitle] = useState("");
@@ -9,10 +12,10 @@ export const EmergencyForm = () => {
   const [emergencyImages, setEmergencyImages] = useState([]);
   const [loading, setLoading] = useState(false);
   const [priority , setPriority] = useState("low"); 
-    // const [raisedBy, setRaisedBy] = useState(""); // Assuming you have a way to get the user's ID or username
+  //const [raisedBy, setRaisedBy] = useState(""); 
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-
+  const { user } = useContext(UserContext);
    const handleFileChange = (e) => {
      const files = [...e.target.files];
      if (files.length > 5) {
@@ -32,7 +35,9 @@ export const EmergencyForm = () => {
     formData.append("description", description);
     formData.append("location", location);
     formData.append("priority", priority); 
-    //formData.append("raisedBy", {user.username});
+
+    formData.append("raisedBy", user.username);
+
   
     
     emergencyImages.forEach((file) => {
@@ -65,10 +70,14 @@ export const EmergencyForm = () => {
     <div className="relative bg-cover bg-center bg-dark-gradient h-screen" 
     //style={{ backgroundImage: 'url("https://www.w3schools.com/w3images/forest.jpg")' }}
     style={{ backgroundImage: `url("/nature2.jpg")` }}
+    
     >
+
       <div className="absolute inset-0 bg-black opacity-50"></div>
-      <div className="relative z-10 flex justify-center items-center h-full text-white">
-        <div className="bg-gray-900 p-6 rounded-xl shadow-lg max-w-lg w-full space-y-6">
+      <div className="relative z-10 flex justify-center items-center h-full text-white ">
+        
+        <div className="bg-gray-900 p-6 rounded-xl shadow-lg max-w-lg w-full space-y-6 glow-border" >
+          
           <h2 className="text-3xl font-semibold text-center text-indigo-500">Report an Emergency</h2>
           <form onSubmit={handleSubmit} className="space-y-4">
             <input
@@ -112,7 +121,7 @@ export const EmergencyForm = () => {
               multiple
               accept="image/*"
               onChange={handleFileChange}
-              className="w-full h-8 text-sm text-gray-500 bg-pink-400 border-2 s"
+              className="w-full text-white file:bg-indigo-600 file:border-none file:px-4 file:py-2 file:rounded file:text-sm bg-gray-700"
               required
             />
            
@@ -178,6 +187,8 @@ export const EmergencyList = () => {
               <p className="mt-1 text-gray-300">{emergency.description}</p>
               <p className="mt-1 text-sm text-gray-400">📍 Location: {emergency.location}</p>
               <p className="mt-1 text-sm text-gray-400">⚠️ Priority: {emergency.priority}</p>
+              {/*<p className="mt-1 text-sm text-gray-400">⚠️ Priority: {emergency.raisedBy.username}</p>*/}
+
 
               {/* Display up to 5 images */}
               {emergency.emergencyImages?.length > 0 && (
